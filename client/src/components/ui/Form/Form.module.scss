@@ -1,0 +1,11 @@
+@import '@/styles/variables.scss';
+.message {
+	font-size: 0.8rem;
+	font-weight: 500;
+	color: $red-color;
+}
+
+.description {
+	font-size: 0.8rem;
+    color: $neutral-500;
+}

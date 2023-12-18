@@ -1,0 +1,55 @@
+@import '@/styles/mixins.scss';
+
+.heading {
+	font-weight: 500;
+	color: $neutral-700;
+	font-family: $font-poppins;
+	font-style: normal;
+	font-feature-settings:
+		'clig' off,
+		'liga' off;
+}
+.hero {
+	@include adaptive-value('font-size', 96, 72);
+	line-height: 100%;
+	letter-spacing: -1.92px;
+}
+.h1 {
+	@include adaptive-value('font-size', 80, 60);
+	line-height: 105%;
+	letter-spacing: -3px;
+}
+.h2 {
+	@include adaptive-value('font-size', 72, 54);
+	line-height: 105%;
+	letter-spacing: -2px;
+}
+
+.h3 {
+	@include adaptive-value('font-size', 54, 40);
+	line-height: 107%;
+	letter-spacing: -1px;
+}
+
+.h4 {
+	@include adaptive-value('font-size', 40, 30);
+	line-height: 110%;
+	letter-spacing: -0.4px;
+}
+.h5 {
+	@include adaptive-value('font-size', 34, 26);
+	line-height: 112%;
+	letter-spacing: -0.6px;
+}
+
+.h6 {
+	@include adaptive-value('font-size', 28, 20);
+	line-height: 121%; /* 121.429% */
+	letter-spacing: -0.6px;
+}
+
+.h7 {
+	@include adaptive-value('font-size', 20, 16);
+	font-weight: 500;
+	line-height: 140%;
+}

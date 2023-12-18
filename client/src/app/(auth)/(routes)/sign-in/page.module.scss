@@ -1,0 +1,30 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.form {
+	max-width: 27.25rem;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	row-gap: 1.5rem;
+}
+
+.sign-up {
+	color: $green-color;
+}
+
+.password-bottom {
+	display: flex;
+	justify-content: space-between;
+	gap: rem(4);
+	padding-top: 4px;
+}
+
+.submit-button {
+	width: 100%;
+}
+
+
+.username-or-email-message {
+	padding-top:  4px;
+}

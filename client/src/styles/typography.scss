@@ -1,0 +1,71 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.font {
+	&-thin {
+		font-weight: 100;
+	}
+	&-extra-light {
+		font-weight: 200;
+	}
+	&-light {
+		font-weight: 300;
+	}
+	&-regular {
+		font-weight: 400;
+	}
+	&-medium {
+		font-weight: 500;
+	}
+	&-semibold {
+		font-weight: 600;
+	}
+	&-bold {
+		font-weight: 700;
+	}
+	&-extra-bold {
+		font-weight: 800;
+	}
+	&-black {
+		font-weight: 900;
+	}
+}
+.font {
+	&-inter {
+		font-family: $font-inter;
+	}
+	&-poppins {
+		font-family: $font-poppins;
+	}
+}
+
+.text {
+	&-xs {
+		font-size: rem(12);
+		line-height: 166.666667%;
+	}
+	&-sm {
+		font-size: rem(14);
+		line-height: 157.142857%; /* 22/14 */
+	}
+	&-base {
+		font-size: rem(16);
+		line-height: 162.5%; /* 26/16 */
+	}
+	&-lg {
+		font-size: rem(18);
+		line-height: 166.666667%; /* 30/18 */
+	}
+	&-xl {
+		font-size: rem(20);
+		line-height: 160%; /* 32/20 */
+	}
+	&-2xl {
+		font-size: rem(22);
+		line-height: 154.545455%; /* 34/22 */
+	}
+	&-3xl {
+		font-size: rem(26);
+		line-height: 153.846154%; /* 40/26 */
+	}
+}

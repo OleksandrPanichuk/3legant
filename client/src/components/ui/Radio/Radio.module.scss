@@ -1,0 +1,29 @@
+@import '@/styles/variables.scss';
+
+.radio {
+	appearance: none;
+	width: 1.25rem;
+	height: 1.25rem;
+	border: 2px solid $neutral-600;
+	border-radius: 50%;
+	transition: all 0.2s ease-in-out;
+	position: relative;
+	&::after {
+		content: '';
+		display: block;
+		border-radius: 50%;
+		width: 0.75rem;
+		height: 0.75rem;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		transition: all 0.2s ease-in-out;
+	}
+	&:checked::after {
+		background-color: $neutral-600;
+	}
+    &:checked:hover::after {
+        background-color: $neutral-700;
+    }
+}

@@ -1,0 +1,37 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.wrapper {
+	display: flex;
+	align-items: center;
+	gap: rem(8);
+	border-bottom: 1px solid $neutral-600;
+	transition: all 0.2s;
+	&-empty {
+		border-color: $neutral-300;
+	}
+	&:hover , &:focus-within{
+		border-color: $neutral-600;
+	}
+}
+
+.input {
+	font-size: rem(16);
+	width: 100%;
+	font-weight: 500;
+	line-height: 162.5%; /* 26/16 */
+	color: $neutral-600;
+	&::placeholder {
+		color: $neutral-400;
+	}
+}
+
+
+.password-hide-button {
+	svg {
+		transition: all .3s;
+		&:hover {
+			stroke: $neutral-600;
+		}
+	}
+}

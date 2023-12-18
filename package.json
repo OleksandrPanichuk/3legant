@@ -1,0 +1,17 @@
+{
+  "name": "rest-session",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "prettier": "^3.0.3"
+  },
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && npm run start:dev",
+    "client": "cd client && npm run dev"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,31 @@
+$minWidth: 320;
+$maxWidth: 1920;
+$maxWidthContainer: 1200;
+$containerPadding: 25;
+$containerWidth: calc($maxWidthContainer + $containerPadding * 2);
+
+$rem-base: 16;
+
+$font-size: 16px !default;
+$font-style: normal !default;
+$font-weight: 500 !default;
+$line-height-base: 1.5 !default;
+
+$font-inter: var(--font-inter), 'Arial', 'sans-serif';
+$font-poppins: var(--font-poppins), 'Arial', 'sans-serif';
+
+$primary-color: #000000;
+$blue-color: #377dff;
+$green-color: #38cb89;
+$orange-color: #ffab00;
+$red-color: #ff5630;
+
+$neutral-100: #fefefe;
+$neutral-200: #f3f5f7;
+$neutral-300: #e8ecef;
+$neutral-400: #6c7275;
+$neutral-500: #343839;
+$neutral-600: #232627;
+$neutral-700: #141718;
+
+$screen-sm: 37.5rem;

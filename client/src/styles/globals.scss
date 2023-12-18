@@ -1,0 +1,42 @@
+@use 'sass:math';
+@import './reset.scss';
+@import './variables.scss';
+@import './mixins.scss';
+
+@import './typography.scss';
+
+body,
+html {
+	font-size: $font-size;
+	font-weight: $font-weight;
+	font-style: $font-style;
+	line-height: $line-height-base;
+	font-family: $font-inter;
+}
+
+.page__container {
+	max-width: #{$containerWidth + px};
+	@include adaptive-value(
+		'padding-inline',
+		$containerPadding,
+		calc($containerPadding / 2)
+	);
+	margin-inline: auto;
+	width: 100%;
+}
+
+.animate-spin {
+	animation-name: spin;
+	animation-duration: 1500ms;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}

@@ -1,0 +1,83 @@
+@import '@/styles/mixins.scss';
+
+.text {
+	&-xs {
+		font-size: rem(14);
+		font-weight: 500;
+		line-height: 171.428571%; /* 24/14 */
+	}
+	&-sm {
+		font-size: rem(16);
+		font-weight: 500;
+		line-height: 175%; /* 28/16 */
+		letter-spacing: -0.4px;
+	}
+	&-base {
+		font-size: rem(18);
+		font-weight: 500;
+		line-height: 177.777778%; /* 32/18 */
+		letter-spacing: -0.4px;
+	}
+	&-lg {
+		font-size: rem(22);
+		font-style: normal;
+		font-weight: 500;
+		line-height: 154.545455%; /* 34/22 */
+	}
+	&-xl {
+		font-size: rem(22);
+		font-style: normal;
+		font-weight: 500;
+		line-height: 172.727273%; /* 38/22 */
+	}
+}
+
+.border {
+	&-base {
+		border-radius: rem(8);
+	}
+	&-lg {
+		border-radius: rem(80);
+	}
+}
+
+.button {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	gap: rem(8);
+	padding: rem(6) rem(16);
+	transition: all 0.3s;
+	&:focus-visible {
+		outline: $neutral-700 auto 2px;
+	}
+	&:disabled {
+		pointer-events: none;
+		opacity: 0.8;
+	}
+	&-default {
+		background-color: $neutral-700;
+		color: $neutral-100;
+		&:focus-visible {
+			outline-offset: 2px;
+		}
+		&:hover {
+			background-color: $neutral-600;
+			color: $neutral-200;
+			outline-offset: 2px;
+			outline: $neutral-700 auto 2px;
+		}
+	}
+	&-outline {
+		color: $neutral-700;
+		border: 1px solid $neutral-700;
+		background-color: transparent;
+		&:hover {
+			outline-offset: 4px;
+			outline: $neutral-700 auto 1px;
+		}
+		&:focus-visible {
+			outline-offset: 4px;
+		}
+	}
+}
