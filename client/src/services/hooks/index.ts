@@ -1,2 +1,5 @@
 export * from './useSignIn'
 export * from './useSignUp'
+export * from './useSendResetPasswordLink'
+export * from './useResetPassword'
+export * from './useGetUsers'

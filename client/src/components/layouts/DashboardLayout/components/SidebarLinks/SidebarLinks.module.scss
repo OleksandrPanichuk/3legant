@@ -1,0 +1,41 @@
+@import '@/styles/variables.scss';
+.list {
+	display: flex;
+	flex-direction: column;
+	row-gap: 0.5rem;
+}
+
+.link {
+	transition: color 0.3s;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	svg,
+	svg path {
+		stroke: $dark-100;
+	}
+	span {
+		color: $dark-100;
+	}
+}
+
+.item {
+	width: 100%;
+	padding: 0.5rem 0.25rem 0.5rem 0.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: start;
+	border-radius: 0.5rem;
+	transition: all 0.3s;
+	&:hover {
+		background-color: rgba($color: $dark-300, $alpha: .4);
+	}
+	&.active {
+		background-color: $dark-300;
+	}
+}
+
+
+.list .item:last-child .link svg {
+	fill: $dark-100
+}

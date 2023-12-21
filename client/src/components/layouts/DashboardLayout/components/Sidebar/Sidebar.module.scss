@@ -1,0 +1,20 @@
+@import  '@/styles/variables.scss';
+.sidebar {
+	position: sticky;
+	max-width: 200px;
+	width: 100%;
+	top: 0;
+	height: 100vh;
+
+	padding: 1rem 0.5rem;
+
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	background-color: $dark-400;
+}
+
+
+.logo {
+	color: $dark-100 !important;
+}

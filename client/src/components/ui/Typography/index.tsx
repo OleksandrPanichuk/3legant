@@ -16,6 +16,7 @@ const Typography = forwardRef(
 			fontFamily,
 			weight,
 			className,
+			fontColor,
 			...props
 		}: ITypographyProps<T>,
 		ref: ForwardedRef<ReactHTML[T]>
@@ -24,7 +25,7 @@ const Typography = forwardRef(
 		return createElement(Comp, {
 			...props,
 			ref,
-			className: typographyVariants({ fontFamily, weight, size, className })
+			className: typographyVariants({ fontFamily, weight,fontColor, size, className })
 		})
 	}
 )

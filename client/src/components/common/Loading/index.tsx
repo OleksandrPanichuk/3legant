@@ -1,4 +1,4 @@
-import { LoaderIcon } from "@/components/icons"
+import { Loader2 as  LoaderIcon } from "lucide-react"
 import styles from './Loading.module.scss'
 import { Typography } from "@/components/ui"
 

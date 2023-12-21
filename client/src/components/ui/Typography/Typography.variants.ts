@@ -10,7 +10,16 @@ export const typographyVariants = cva('',{
             xl: 'text-xl',
             '2xl': 'text-2xl',
             '3xl': 'text-3xl'
-
+        },
+        fontColor: {
+            primary: 'text-primary',
+            'neutral-100':'text-neutral-100',
+            'neutral-200':'text-neutral-200',
+            'neutral-300':'text-neutral-300',
+            'neutral-400':'text-neutral-400',
+            'neutral-500':'text-neutral-500',
+            'neutral-600':'text-neutral-600',
+            'neutral-700':'text-neutral-700',
         },
 		weight: {
             100: 'font-thin',
@@ -31,6 +40,7 @@ export const typographyVariants = cva('',{
     defaultVariants: {
         fontFamily:'inter',
         size:'base',
-        weight:400
+        weight:400,
+        fontColor:'neutral-500'
     }
 })

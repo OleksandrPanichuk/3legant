@@ -3,7 +3,7 @@ import { InputHTMLAttributes, ReactNode, forwardRef, useState } from 'react'
 import { Radio } from '@/components/ui'
 import styles from './Input.module.scss'
 import { cn } from '@/lib'
-import { EyeIcon, EyeOffIcon } from '@/components/icons'
+import { Eye as  EyeIcon, EyeOff as EyeOffIcon } from 'lucide-react'
 
 interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
 	icon?: ReactNode

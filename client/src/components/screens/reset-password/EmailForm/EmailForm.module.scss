@@ -1,0 +1,27 @@
+@import '@/styles/variables.scss';
+.form {
+	max-width: 27.25rem;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	row-gap: 1.5rem;
+}
+.button {
+	&-submit {
+		width: 100%;
+	}
+	&-login {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+		&__link {
+			display: flex;
+			align-items: center;
+			color: $neutral-500;
+			transition: color 0.3s;
+			&:hover {
+				color: $neutral-700;
+			}
+		}
+	}
+}

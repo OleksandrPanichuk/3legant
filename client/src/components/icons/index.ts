@@ -1,3 +1,3 @@
-export * from './EyeIcon'
-export * from './EyeOffIcon'
-export * from './LoaderIcon'
+export * from './SearchIcon'
+export * from './BagIcon'
+export * from './SaleIcon'

@@ -1,9 +1,8 @@
-import { User } from "@prisma/client";
-import { Exclude,  } from "class-transformer";
-import { IsDate, IsEmail, IsMongoId, IsString } from "class-validator";
+import { User, UserRole } from "@prisma/client";
+import { IsDate, IsEmail, IsEnum, IsMongoId, IsOptional, IsString, IsUrl, ValidateNested } from "class-validator";
 
 
-export class UserEntity implements User {
+export class UserEntity implements Omit<User, 'hash' | 'hashedRt'> {
     @IsMongoId()
     readonly id: string
 
@@ -17,11 +16,6 @@ export class UserEntity implements User {
     @IsEmail()
     readonly email: string
 
-    @Exclude()
-    readonly hash:string 
-
-    @Exclude()
-    readonly hashedRt:string
 
     @IsDate()
     readonly createdAt:Date
@@ -29,4 +23,31 @@ export class UserEntity implements User {
 
     @IsDate()
     readonly updatedAt:Date
+
+    @IsEnum(UserRole)
+   readonly role: UserRole
 }
+
+
+export class UserEntityWithHashes extends UserEntity {
+    readonly hash: string
+    readonly hashedRt:string
+}
+
+
+
+class UserAvatar {
+    @IsString()
+    @IsUrl()
+    readonly url: string
+    
+    @IsString()
+    readonly key: string 
+}
+export class UserEntityWithAvatar  extends UserEntity {
+    @IsOptional()
+    @ValidateNested()
+    readonly avatar?:UserAvatar
+}
+
+

@@ -15,7 +15,7 @@ export class MailerService {
             },
             template: join(__dirname, '/templates/reset-password.template.hbs'),
             to:user.email,
-            subject:'Reset password | Podium'
+            subject:'Reset password | 3legant'
         })
     }
 }

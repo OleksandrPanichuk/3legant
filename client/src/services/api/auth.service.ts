@@ -8,6 +8,10 @@ export class AuthApi {
             return await axios.post<TypeSignInResponse>(`/auth/sign-in`, parsedData)
     }
 
+    static async signOut(redirectUrl?:string) {
+        return await axios.patch('/auth/log-out', {redirectUrl})
+    }
+
     static async signUp(dto:TypeSignUpInput): Promise<AxiosResponse<TypeSignUpResponse>> {
         const parsedData = signUpSchema.parse(dto) 
         return await axios.post<TypeSignUpResponse>('/auth/sign-up',parsedData)

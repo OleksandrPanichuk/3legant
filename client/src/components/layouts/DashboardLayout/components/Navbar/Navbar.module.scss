@@ -1,0 +1,18 @@
+@import  '@/styles/variables.scss';
+
+.header {
+	display: flex;
+	padding: 0.5rem;
+	column-gap: 0.5rem;
+	align-items: center;
+	background-color: $white;
+}
+
+input.input {
+	max-width: 200px;
+	background-color: $neutral-200 ;
+	&:focus-visible {
+		border-color: $neutral-400;
+		box-shadow: none;
+	}
+}

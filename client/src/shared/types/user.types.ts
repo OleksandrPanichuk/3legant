@@ -1,4 +1,4 @@
-
+export type UserRole = 'CUSTOMER' | 'MANAGER' | "ADMIN"
 
 export type TypeUser = {
     id:string 
@@ -7,4 +7,9 @@ export type TypeUser = {
     email:string 
     createdAt:Date
     updatedAt:Date
+    role:UserRole
+    avatar?: {
+        url:string
+        key:string
+    }
 }

@@ -3,7 +3,7 @@ import { BadRequestException, ConflictException, ForbiddenException, Injectable,
 import { AuthResponseDto, RefreshTokenResponse, SignInInput, SignInResponse, SignUpInput, SignUpResponse } from './dto';
 import { JwtService } from '@nestjs/jwt';
 import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from '@/shared/constants';
-import { UserEntity } from '@/user/user.entity';
+import { UserEntityWithHashes } from '@/user/user.entity';
 import { TypeTokenDecoded } from '@/shared/types';
 
 @Injectable()
@@ -32,7 +32,7 @@ export class AuthService {
 
             const hash = await bcrypt.hash(input.password)
 
-            const user: UserEntity =  await this.prisma.user.create({
+            const user: UserEntityWithHashes =  await this.prisma.user.create({
 				data: {
                     email:input.email,
                     hash,
@@ -58,7 +58,7 @@ export class AuthService {
 
     public async signIn(input: SignInInput): Promise<SignInResponse> {
 		try {
-			const user: UserEntity = await this.prisma.user.findFirst({
+			const user: UserEntityWithHashes = await this.prisma.user.findFirst({
 				where: {
                     OR: [
                         {

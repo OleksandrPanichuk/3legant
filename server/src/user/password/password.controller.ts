@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, HttpStatus, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { ResetPasswordInput, SendResetPasswordLinkInput } from './dto';
 import { PasswordService } from './password.service';
 
@@ -11,6 +11,11 @@ export class PasswordController {
     @HttpCode(HttpStatus.CREATED)
     sendPasswordResetLink(@Body() input:SendResetPasswordLinkInput  ) {
         return this.passwordService.sendResetPasswordLink(input)
+    }
+
+    @Get('verify/:code')
+    verifyCode(@Param('code') code:string) {
+        return this.passwordService.verifyResetPasswordCode(code)
     }
 
 

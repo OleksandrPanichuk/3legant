@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import { Inter, Poppins } from 'next/font/google'
 import '@/styles/globals.scss'
 import { cn } from '@/lib'
-import { AuthProvider, QueryProvider } from '@/components/providers'
-import { Toaster } from 'sonner'
-
+import {
+	RootProviders
+} from '@/components/providers'
 
 const inter = Inter({
 	subsets: ['latin'],
@@ -30,12 +30,9 @@ export default async function RootLayout({
 	return (
 		<html lang="en">
 			<body className={cn(inter.variable, poppins.variable)}>
-				<QueryProvider>
-					<AuthProvider>
-						<Toaster position="bottom-right" />
-						{children}
-					</AuthProvider>
-				</QueryProvider>
+				<RootProviders>
+					{children}
+				</RootProviders>
 			</body>
 		</html>
 	)

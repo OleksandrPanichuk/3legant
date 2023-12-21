@@ -19,7 +19,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import styles from './page.module.scss'
 import { useSignIn } from '@/services'
-import { LoaderIcon } from '@/components/icons'
+import { Loader2 as  LoaderIcon } from 'lucide-react'
 
 type TypeFormData = z.infer<typeof signInSchema>
 
@@ -69,16 +69,26 @@ const SignInPage = () => {
 					render={({ field }) => (
 						<FormItem>
 							<FormControl>
-								<Input {...field} disabled={isPending} placeholder="Password" type={'password'} />
+								<Input
+									{...field}
+									disabled={isPending}
+									placeholder="Password"
+									type={'password'}
+								/>
 							</FormControl>
 							<div className={styles['password-bottom']}>
 								<FormMessage />
 								<div />
-								<button type={'button'}>
-									<Typography size={'sm'} weight={600} as="span">
+								<Link href={Routes.RESET_PASSWORD}>
+									<Typography
+										size={'sm'}
+										fontColor={'neutral-700'}
+										weight={600}
+										as="span"
+									>
 										Forgot Password?
 									</Typography>
-								</button>
+								</Link>
 							</div>
 						</FormItem>
 					)}

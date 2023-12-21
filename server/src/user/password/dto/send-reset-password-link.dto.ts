@@ -4,7 +4,7 @@ import { IsEmail, IsUrl } from "class-validator";
 
 export class SendResetPasswordLinkInput {
 
-    @IsUrl()
+    // @IsUrl()
     readonly link: string
 
     @IsEmail()

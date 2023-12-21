@@ -20,7 +20,7 @@ import Link from 'next/link'
 import { Routes } from '@/shared/constants'
 import { useState } from 'react'
 import { useSignUp } from '@/services'
-import { LoaderIcon } from '@/components/icons'
+import { Loader2 as  LoaderIcon } from 'lucide-react'
 
 type TypeFormData = z.infer<typeof signUpSchema>
 

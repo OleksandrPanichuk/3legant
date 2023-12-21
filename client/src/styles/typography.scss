@@ -69,3 +69,31 @@
 		line-height: 153.846154%; /* 40/26 */
 	}
 }
+
+
+.text {
+	&-neutral-100 {
+		color: $neutral-100;
+	}
+	&-neutral-200 {
+		color: $neutral-200;
+	}
+	&-neutral-300 {
+		color: $neutral-300;
+	}
+	&-neutral-400 {
+		color: $neutral-400;
+	}
+	&-neutral-500 {
+		color:$neutral-500;
+	}
+	&-neutral-600 {
+		color: $neutral-600;
+	}
+	&-neutral-700 {
+		color: $neutral-700;
+	}
+	&-primary {
+		color: $primary-color
+	}
+}

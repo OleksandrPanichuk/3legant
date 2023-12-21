@@ -1,11 +1,10 @@
 import { ExecutionContext, createParamDecorator } from "@nestjs/common";
-import { User } from "@prisma/client";
 import { PrismaService, Redis, omit } from "@/common";
 import { Request } from "express";
 import { ACCESS_TOKEN_SECRET, TOKENS } from "@/shared/constants";
 import { JwtService } from "@nestjs/jwt";
 import {  TypeTokenDecoded } from "@/shared/types";
-import { UserEntity } from "@/user/user.entity";
+import { UserEntityWithAvatar, UserEntityWithHashes } from "@/user/user.entity";
 import { ExtractJwt } from "passport-jwt";
 
 
@@ -14,10 +13,12 @@ const redis = Redis.getInstance()
 const jwtService = new JwtService()
 
 
-const omittedFields: (keyof User)[] = ['hash', 'hashedRt']
+const omittedFields = ['hash', 'hashedRt']
+
+type User = UserEntityWithAvatar & UserEntityWithHashes
 
 export const CurrentUser = createParamDecorator(
-    async <T extends keyof User>(data: T | undefined, context:ExecutionContext): Promise<UserEntity | undefined | User[T]> => {
+    async <T extends keyof UserEntityWithAvatar>(data: T | undefined, context:ExecutionContext): Promise<UserEntityWithAvatar | undefined | UserEntityWithAvatar[T]> => {
         const request = context.switchToHttp().getRequest<Request>()
 
         const token  = request.cookies[TOKENS.ACCESS_TOKEN] ?? ExtractJwt.fromAuthHeaderAsBearerToken()(request) as string | undefined
@@ -32,20 +33,28 @@ export const CurrentUser = createParamDecorator(
             return 
         } 
 
-        const cachedUser = JSON.parse(await redis.get(`user:${decodedToken.sub}`)) as User | undefined
+        const cachedUser = JSON.parse(await redis.get(`user:${decodedToken.sub}`)) as UserEntityWithAvatar | undefined
 
 
-        if(cachedUser?.id && !omittedFields.includes(data)) {
+        if(cachedUser?.id && !['hash','hashedRt'].includes(data)) {
             if(data) {
                 return cachedUser[data]
             }
             return cachedUser
         }
 
-        const dbUser = await prisma.user.findUnique({
+        const dbUser: User = await prisma.user.findUnique({
 			where: {
 				id: decodedToken.sub
-			}
+			},
+            include: {
+                avatar:{
+                    select: {
+                        url:true,
+                        key:true
+                    }
+                }
+            }
 		})
         
         
@@ -54,14 +63,13 @@ export const CurrentUser = createParamDecorator(
         }
 
         if(!omittedFields.includes(data)) {
-            await redis.set(`user:${decodedToken.sub}`, JSON.stringify(omit({...dbUser}, omittedFields)), 'EX', 7200)
+            await redis.set(`user:${decodedToken.sub}`, JSON.stringify(omit({...dbUser}, ['hash','hashedRt'])), 'EX', 7200)
         }
 
 
         if(data) {
             return dbUser[data]
         }
-       
-        return omit(dbUser, omittedFields)
+        return  omit(dbUser,['hash','hashedRt'])
     }
 )

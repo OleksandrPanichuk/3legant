@@ -50,7 +50,7 @@ export class PasswordService {
             throw generateErrorResponse(err)
         }
     }
-    public async resetPassword(input:ResetPasswordInput) {
+    public async resetPassword(input:ResetPasswordInput): Promise<string> {
         try {
             const forgetPasswordString = await this.redis.get(`reset-password-code:${input.code}`)
             if(!forgetPasswordString) throw new BadRequestException('Please, try again')
