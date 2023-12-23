@@ -2,7 +2,7 @@
 import { cn } from '@/lib'
 import React, { ForwardedRef, ReactNode } from 'react'
 
-interface IContainerProps {
+export interface IContainerProps {
 	className?: string
 	children: ReactNode
 	fullScreen?: boolean

@@ -48,6 +48,9 @@
 	gap: rem(8);
 	padding: rem(6) rem(16);
 	transition: all 0.3s;
+	min-width: 2.5rem;
+
+	user-select: none;
 	&:focus-visible {
 		outline: $neutral-700 auto 2px;
 	}
@@ -78,6 +81,16 @@
 		}
 		&:focus-visible {
 			outline-offset: 4px;
+		}
+	}
+
+	&-ghost {
+		color: $gray-800;
+		&:hover {
+			background-color: $gray-100;
+		}
+		&:disabled {
+			opacity: 0.5;
 		}
 	}
 }

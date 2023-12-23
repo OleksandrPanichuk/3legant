@@ -1,7 +1,7 @@
 import { axios } from "@/lib";
 import { TypeUser } from "@/shared/types";
 import { AxiosResponse, AxiosRequestConfig } from "axios";
-import {findAllUsersSchema, FindAllUsersInput} from '@/services'
+import {findAllUsersSchema, FindAllUsersInput, FindAllUsersResponse} from '@/services'
 import qs from 'query-string'
 
 export class UserApi {
@@ -10,7 +10,7 @@ export class UserApi {
     }
 
 
-    static async findAll(dto: FindAllUsersInput = {}): Promise<AxiosResponse<TypeUser[]>> {
+    static async findAll(dto: FindAllUsersInput = {}): Promise<AxiosResponse<FindAllUsersResponse>> {
         findAllUsersSchema.parse(dto)
 
         const url = qs.stringifyUrl({
@@ -18,6 +18,6 @@ export class UserApi {
             query: dto
         })
 
-        return await axios.get<TypeUser[]>(url)
+        return await axios.get<FindAllUsersResponse>(url)
     }
 }

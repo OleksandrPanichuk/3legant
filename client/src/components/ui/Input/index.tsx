@@ -5,7 +5,7 @@ import styles from './Input.module.scss'
 import { cn } from '@/lib'
 import { Eye as  EyeIcon, EyeOff as EyeOffIcon } from 'lucide-react'
 
-interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
 	icon?: ReactNode
 }
 

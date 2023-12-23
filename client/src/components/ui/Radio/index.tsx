@@ -2,7 +2,7 @@ import { cn } from '@/lib'
 import { forwardRef } from 'react'
 import styles from './Radio.module.scss'
 
-interface IRadioProps
+export interface IRadioProps
 	extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {}
 
 export const Radio = forwardRef<HTMLInputElement, IRadioProps>(

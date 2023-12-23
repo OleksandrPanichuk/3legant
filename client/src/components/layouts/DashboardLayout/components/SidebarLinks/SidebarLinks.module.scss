@@ -10,6 +10,9 @@
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
+	width: 100%;
+	padding: 0.5rem 0.25rem 0.5rem 0.5rem;
+
 	svg,
 	svg path {
 		stroke: $dark-100;
@@ -21,21 +24,19 @@
 
 .item {
 	width: 100%;
-	padding: 0.5rem 0.25rem 0.5rem 0.5rem;
 	display: flex;
 	align-items: center;
-	justify-content: start;
+	justify-content: flex-start;
 	border-radius: 0.5rem;
 	transition: all 0.3s;
 	&:hover {
-		background-color: rgba($color: $dark-300, $alpha: .4);
+		background-color: rgba($color: $dark-300, $alpha: 0.4);
 	}
 	&.active {
 		background-color: $dark-300;
 	}
 }
 
-
 .list .item:last-child .link svg {
-	fill: $dark-100
+	fill: $dark-100;
 }

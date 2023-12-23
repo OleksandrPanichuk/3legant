@@ -1,5 +1,6 @@
 import { Transform } from "class-transformer";
-import { IsNotEmpty, IsNumber, IsOptional, IsString, Min } from "class-validator";
+import { IsNumber, IsOptional, IsString, Min, ValidateNested } from "class-validator";
+import { UserEntityWithAvatar } from "../user.entity";
 
 
 
@@ -20,4 +21,13 @@ export class FindAllInput {
     @IsOptional()
     @IsString()
     searchValue?: string
+}
+
+
+export class FindAllResponse {
+    @ValidateNested()
+    users: UserEntityWithAvatar[]
+
+    @IsNumber()
+    count: number
 }

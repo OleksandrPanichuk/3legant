@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation'
 import { PropsWithChildren } from 'react'
 import { Navbar, Sidebar } from './components'
 import styles from './DashboardLayout.module.scss'
+import { Container } from '@/components/ui'
 
 export const DashboardLayout = ({ children }: PropsWithChildren) => {
 	const { isPending, user } = useAuth()
@@ -12,14 +13,14 @@ export const DashboardLayout = ({ children }: PropsWithChildren) => {
 		return notFound()
 	}
 	return (
-		<Flex>
+		<Flex minHeight={'100%'}>
 			<Show breakpoint="(min-width: 48rem)">
 				<Sidebar />
 			</Show>
 			<div className={styles.main}>
 				<Navbar />
 				<Divider />
-				{children}
+				<Container className={styles.container}>{children}</Container>
 			</div>
 		</Flex>
 	)

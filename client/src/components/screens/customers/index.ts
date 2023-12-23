@@ -1,1 +1,2 @@
-export * from './Table'
+export * from './CustomersTable'
+export * from './CustomersPage'

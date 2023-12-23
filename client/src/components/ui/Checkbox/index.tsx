@@ -3,7 +3,7 @@ import { InputHTMLAttributes, forwardRef, useRef } from 'react'
 import styles from './Checkbox.module.scss'
 import { cn, mergeRefs } from '@/lib'
 
-interface ICheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {}
+export interface ICheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {}
 
 export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(({className, ...props}, ref) => {
 	const inputRef = useRef<HTMLInputElement>(null)

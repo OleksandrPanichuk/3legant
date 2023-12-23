@@ -49,7 +49,7 @@ export const UserButton = () => {
 			<MenuButton>
 				<Avatar width={'2.5rem'} height={'2.5rem'} name={user.name} src={user.avatar?.key} />
 			</MenuButton>
-			<MenuList>
+			<MenuList paddingInline={'4px'}>
 				{menuLinks.map((link) => {
 					const Icon = link.icon
 					return (
