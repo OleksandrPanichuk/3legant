@@ -8,6 +8,7 @@ import { PrismaModule, UnauthorizedExceptionFilter, MailerModule, RolesGuard } f
 import { AuthModule } from './auth/auth.module';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { UserModule } from './user/user.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { UserModule } from './user/user.module';
 		MailerModule,
 		AuthModule,
 		UserModule,
+		CategoriesModule,
   ],
   providers: [
 	{
@@ -29,6 +31,6 @@ import { UserModule } from './user/user.module';
 		provide:APP_GUARD,
 		useClass: RolesGuard
 	}
-  ]
+  ],
 })
 export class AppModule {}

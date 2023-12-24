@@ -4,7 +4,7 @@
 	min-height: 100dvh;
 	width: 100%;
 	display: flex;
-	@include screen-sm-max {
+	@include screen-md-max {
 		flex-direction: column;
 	}
 }
@@ -15,7 +15,7 @@
 	@include screen-sm {
 		flex: 1;
 	}
-	@include screen-sm-max {
+	@include screen-md-max {
 		height: 50dvh;
 	}
 	background-blend-mode: multiply, normal;

@@ -8,7 +8,6 @@ import {
 } from './PasswordForm.types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
-import { useResetPassword } from '@/services'
 import {
 	Button,
 	Form,
@@ -20,6 +19,7 @@ import {
 	Input,
 	Typography
 } from '@/components/ui'
+import { useResetPassword } from '@/services'
 import { Loader2 as LoaderIcon } from 'lucide-react'
 import styles from './PasswordForm.module.scss'
 

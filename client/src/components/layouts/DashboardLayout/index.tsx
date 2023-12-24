@@ -8,10 +8,10 @@ import styles from './DashboardLayout.module.scss'
 import { Container } from '@/components/ui'
 
 export const DashboardLayout = ({ children }: PropsWithChildren) => {
-	const { isPending, user } = useAuth()
-	if ((!isPending && user && user.role === 'CUSTOMER') || !user) {
-		return notFound()
-	}
+	// const { isPending, user } = useAuth()
+	// if ((!isPending && user && user.role === 'CUSTOMER') || !user) {
+	// 	return notFound()
+	// }
 	return (
 		<Flex minHeight={'100%'}>
 			<Show breakpoint="(min-width: 48rem)">

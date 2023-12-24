@@ -16,10 +16,13 @@ import {
 } from '@/components/ui'
 import { Routes } from '@/shared/constants'
 import Link from 'next/link'
-import styles from './EmailForm.module.scss'
-import { ChevronLeft as  ChevronLeftIcon, Loader2 as  LoaderIcon } from 'lucide-react'
+import {
+	ChevronLeft as ChevronLeftIcon,
+	Loader2 as LoaderIcon
+} from 'lucide-react'
 import { cn } from '@/lib'
 import { useSendResetPasswordLink } from '@/services'
+import styles from './EmailForm.module.scss'
 
 export const EmailForm = () => {
 	const form = useForm<TypeFormData>({

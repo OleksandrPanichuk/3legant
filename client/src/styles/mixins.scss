@@ -37,13 +37,36 @@
 	@return $rem-value;
 }
 
+@mixin screen-sm-max {
+	@media screen and (max-width: $screen-sm) {
+		@content;
+	}
+}
+@mixin screen-md-max {
+	@media screen and (max-width: $screen-md) {
+		@content;
+	}
+}
+
 @mixin screen-sm {
 	@media screen and (min-width: $screen-sm) {
 		@content;
 	}
 }
-@mixin screen-sm-max {
-	@media screen and (max-width: $screen-sm) {
+@mixin screen-lg {
+	@media screen and (min-width: $screen-lg) {
+		@content;
+	}
+}
+
+@mixin screen-md {
+	@media screen and (min-width: $screen-md) {
+		@content;
+	}
+}
+
+@mixin screen-xl {
+	@media screen and (min-width: $screen-xl) {
 		@content;
 	}
 }

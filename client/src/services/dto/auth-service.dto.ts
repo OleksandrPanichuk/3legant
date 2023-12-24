@@ -1,3 +1,4 @@
+import { TypeTokens, TypeUser } from "@/shared/types";
 import { z } from "zod";
 
 
@@ -13,3 +14,16 @@ export const signUpSchema = z.object({
     email: z.string().min(1, 'Email is required').email('Invalid email address'),
     password: z.string().min(8, 'Password is too short')
 })
+
+
+
+export type SignUpResponse = {
+    user:TypeUser
+    tokens:TypeTokens
+}
+
+export type SignInResponse = SignUpResponse
+
+
+export type SignInInput  = z.infer<typeof signInSchema>
+export type SignUpInput = z.infer<typeof signUpSchema>

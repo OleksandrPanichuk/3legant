@@ -1,18 +1,18 @@
 import { useMutation } from "@tanstack/react-query"
-import { AuthApi} from "@/services"
-import { IMutationOptions, TypeSignInInput, TypeSignInResponse } from "@/shared/types"
+import { AuthApi, SignInInput, SignInResponse} from "@/services"
+import { IMutationOptions } from "@/shared/types"
 import { AxiosError, AxiosResponse } from "axios"
 import { toast } from "sonner"
 import { useAuth } from "@/components/providers"
 
 
-type ResponseType = AxiosResponse<TypeSignInResponse>
+type ResponseType = AxiosResponse<SignInResponse>
 
-export const useSignIn = (options:IMutationOptions<ResponseType,TypeSignInInput,Error> = {}) => {
+export const useSignIn = (options:IMutationOptions<ResponseType,SignInInput,Error> = {}) => {
     const {setUser} = useAuth()
 
     return useMutation({
-        mutationFn:(dto:TypeSignInInput): Promise<ResponseType> => AuthApi.signIn(dto),
+        mutationFn:(dto:SignInInput): Promise<ResponseType> => AuthApi.signIn(dto),
         onSuccess:(response,variables) => {
             setUser(response.data.user)
             toast.success("You successfully signed in.")

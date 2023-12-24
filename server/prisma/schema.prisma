@@ -54,13 +54,22 @@ model Product {
   price        Decimal
   measurements String
 
+  status ProductStatus @default(DRAFT)
+
   info       ProductInfo?
   images     ProductImage[]
   categories Category[]
   rewiews    Review[]
+  colors     ProductColor[]
 
   createdAt DateTime @default(now())
   cart      Cart[]
+}
+
+enum ProductStatus {
+  VISIBLE
+  HIDDEN
+  DRAFT
 }
 
 model ProductInfo {
@@ -85,7 +94,7 @@ model ProductImage {
   url String @db.Text
   key String @db.Text
 
-  main Boolean
+  isPreview Boolean @default(false)
 
   product   Product @relation(fields: [productId], references: [id])
   productId String  @db.Uuid
@@ -97,11 +106,14 @@ model ProductColor {
   id String @id @default(uuid()) @map("_id") @db.Uuid
 
   image ProductColorImage?
+  name  String
 
-  name String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String  @db.Uuid
+
   cart Cart[]
 
-  productColorImageId String @db.Uuid
+  @@index([productId])
 }
 
 model ProductColorImage {
@@ -115,8 +127,9 @@ model ProductColorImage {
 }
 
 model Category {
-  id       String    @id @default(uuid()) @map("_id") @db.Uuid
-  name     String
+  id   String @id @default(uuid()) @map("_id") @db.Uuid
+  name String
+
   products Product[]
 }
 

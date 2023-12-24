@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import * as React from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import {
@@ -147,6 +147,27 @@ const FormMessage = React.forwardRef<
 })
 FormMessage.displayName = 'FormMessage'
 
+const FormLabel = React.forwardRef<
+	React.ElementRef<'label'>,
+	React.ComponentPropsWithoutRef<'label'>
+>(({ className, ...props }, ref) => {
+	const { error, formItemId } = useFormField()
+
+	return (
+		<label
+			ref={ref}
+			className={cn(
+				'text-sm font-medium',
+				error && styles['label--destructive'],
+				className
+			)}
+			htmlFor={formItemId}
+			{...props}
+		/>
+	)
+})
+FormLabel.displayName = 'FormLabel'
+
 export {
 	useFormField,
 	Form,
@@ -154,5 +175,6 @@ export {
 	FormControl,
 	FormDescription,
 	FormMessage,
-	FormField
+	FormField,
+	FormLabel
 }

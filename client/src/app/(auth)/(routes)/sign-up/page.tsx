@@ -1,9 +1,7 @@
 'use client'
-import { signUpSchema } from '@/lib'
+import { signUpSchema, SignUpInput } from '@/services'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
-import styles from './page.module.scss'
 import {
 	Button,
 	Checkbox,
@@ -20,13 +18,12 @@ import Link from 'next/link'
 import { Routes } from '@/shared/constants'
 import { useState } from 'react'
 import { useSignUp } from '@/services'
-import { Loader2 as  LoaderIcon } from 'lucide-react'
-
-type TypeFormData = z.infer<typeof signUpSchema>
+import { Loader2 as LoaderIcon } from 'lucide-react'
+	import styles from './page.module.scss'
 
 const SignUpPage = () => {
 	const [agreed, setAgreed] = useState<boolean>(false)
-	const form = useForm<TypeFormData>({
+	const form = useForm<SignUpInput>({
 		resolver: zodResolver(signUpSchema),
 		defaultValues: {
 			name: '',
@@ -38,7 +35,7 @@ const SignUpPage = () => {
 	})
 
 	const { isPending, mutate: signUp } = useSignUp()
-	const onSubmit = (values: TypeFormData) => agreed && signUp(values)
+	const onSubmit = (values: SignUpInput) => agreed && signUp(values)
 
 	return (
 		<Form {...form}>

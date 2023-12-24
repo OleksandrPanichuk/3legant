@@ -2,7 +2,7 @@ import { Controller, Get, HttpCode, HttpStatus, UseGuards, Query } from '@nestjs
 import { UserService } from './user.service';
 import { UserEntityWithAvatar } from './user.entity';
 import { CurrentUser, AccessTokenGuard, Roles } from '@/common';
-import { FindAllInput } from './dto';
+import { FindAllInput, FindAllResponse } from './dto';
 
 
 @Controller('users')
@@ -20,7 +20,7 @@ export class UserController {
   @Roles(['ADMIN','MANAGER'])
   @Get('')
   @HttpCode(HttpStatus.OK)
-  findAll(@Query() query: FindAllInput): Promise<UserEntityWithAvatar[]> {
+  findAll(@Query() query: FindAllInput): Promise<FindAllResponse> {
     return this.userService.findAll(query);
   }
 }

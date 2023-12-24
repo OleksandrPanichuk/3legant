@@ -1,2 +1,5 @@
 export * from './password-service.dto'
 export * from './user-service.dto'
+export * from './product-service.dto'
+export * from './categories-service.dto'
+export * from './auth-service.dto'

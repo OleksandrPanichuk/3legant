@@ -1,8 +1,17 @@
-
 //TODO: metadata
 
-const Page = () => {
-  return <div>Page</div>;
-};
+import { CreateProductForm } from '@/components/screens/create-product'
+import { Heading } from '@/components/ui'
 
-export default Page;
+const Page = () => {
+	return (
+		<>
+			<div>
+				<Heading variant="h6">Add new product</Heading>
+			</div>
+			<CreateProductForm />
+		</>
+	)
+}
+
+export default Page

@@ -11,20 +11,17 @@ import {
 	FormMessage,
 	Button
 } from '@/components/ui'
-import { signInSchema } from '@/lib'
+import { signInSchema, SignInInput } from '@/services'
 import { Routes } from '@/shared/constants'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 import styles from './page.module.scss'
 import { useSignIn } from '@/services'
-import { Loader2 as  LoaderIcon } from 'lucide-react'
-
-type TypeFormData = z.infer<typeof signInSchema>
+import { Loader2 as LoaderIcon } from 'lucide-react'
 
 const SignInPage = () => {
-	const form = useForm<TypeFormData>({
+	const form = useForm<SignInInput>({
 		resolver: zodResolver(signInSchema),
 		defaultValues: {
 			password: '',
@@ -35,7 +32,7 @@ const SignInPage = () => {
 
 	const { isPending, mutate: signIn } = useSignIn()
 
-	const onSubmit = (values: TypeFormData) => signIn(values)
+	const onSubmit = (values: SignInInput) => signIn(values)
 
 	return (
 		<Form {...form}>

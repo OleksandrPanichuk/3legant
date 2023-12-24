@@ -1,0 +1,17 @@
+@import '@/styles/mixins.scss';
+
+.price-measurements {
+	gap: 1rem;
+	width: 100%;
+	justify-content: space-between;
+
+	@include screen-sm-max {
+		flex-direction: column;
+	}
+
+	@include screen-sm {
+		> div {
+			flex: 1;
+		}
+	}
+}

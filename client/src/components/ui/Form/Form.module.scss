@@ -7,5 +7,11 @@
 
 .description {
 	font-size: 0.8rem;
-    color: $neutral-500;
+	color: $neutral-500;
+}
+
+.label {
+	&--destructive {
+		color: $red-color;
+	}
 }
