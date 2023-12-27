@@ -9,7 +9,7 @@ export const ProductsPage = () => {
 	return (
 		<>
 			<div className={styles.top}>
-				<Heading variant="h6">Products</Heading>
+				<Heading size='base'>Products</Heading>
 				<Link className={styles['create-product']} href={Routes.CREATE_PRODUCT} >
 					<Plus />
 					Add

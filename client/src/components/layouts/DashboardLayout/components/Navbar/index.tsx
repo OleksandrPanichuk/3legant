@@ -9,7 +9,7 @@ export const Navbar = () => {
 	return (
 		<header className={styles.header}>
 			<Show breakpoint="(min-width: 48rem)">
-				<Heading variant="h4">Dashboard</Heading>
+				<Heading as={'h2'}>Dashboard</Heading>
 			</Show>
 			<Hide breakpoint="(min-width: 48rem)">
 				<MobileSidebar />

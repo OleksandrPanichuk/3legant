@@ -1,10 +1,11 @@
 import { Body, Controller, HttpCode, HttpStatus, Patch, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LogOutInput, SignInInput, SignUpInput } from './dto';
-import { AccessTokenGuard, CurrentUser } from '@/common';
 import { Request, Response } from 'express';
 import { TOKENS } from '@/shared/constants';
 import { RefreshTokenGuard } from './guard';
+import { AccessTokenGuard } from '@/common/guard'
+import { CurrentUser } from '@/common/decorators'
 
 @Controller('auth')
 export class AuthController {

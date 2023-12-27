@@ -54,16 +54,15 @@ model Product {
   price        Decimal
   measurements String
 
-  status ProductStatus @default(DRAFT)
+  status    ProductStatus @default(DRAFT)
+  createdAt DateTime      @default(now())
 
   info       ProductInfo?
   images     ProductImage[]
   categories Category[]
   rewiews    Review[]
   colors     ProductColor[]
-
-  createdAt DateTime @default(now())
-  cart      Cart[]
+  cart       Cart[]
 }
 
 enum ProductStatus {
@@ -78,11 +77,11 @@ model ProductInfo {
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String  @unique @db.Uuid
 
-  details  String  @db.Text
-  width    Decimal
-  height   Decimal
-  length   Decimal
-  weight   Decimal
+  details  String @db.Text
+  width    String
+  height   String
+  length   String
+  weight   String
   packages Int
 
   @@index([productId])

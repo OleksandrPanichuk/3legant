@@ -1,16 +1,27 @@
 'use client'
 
-import { PropsWithChildren } from 'react'
-import { AuthProvider, QueryProvider } from '@/components/providers'
+import {
+	AuthProvider,
+	QueryProvider,
+} from '@/components/providers'
+import { TypeUser } from '@/shared/types'
 import { ChakraProvider } from '@chakra-ui/react'
+import { PropsWithChildren } from 'react'
 import { Toaster } from 'sonner'
 
-export const RootProviders = ({ children }: PropsWithChildren) => {
+interface IRootProviderProps {
+	initialUser?: TypeUser
+}
+
+export const RootProviders = ({
+	children,
+	initialUser,
+}: PropsWithChildren<IRootProviderProps>) => {
 	return (
 		<QueryProvider>
-			<AuthProvider>
+			<AuthProvider initialUser={initialUser}>
 				<ChakraProvider>
-					<Toaster position="bottom-right" />
+					<Toaster position='bottom-right' />
 					{children}
 				</ChakraProvider>
 			</AuthProvider>

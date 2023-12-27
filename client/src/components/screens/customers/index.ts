@@ -1,2 +1,2 @@
 export * from './CustomersTable'
-export * from './CustomersPage'
+export * from './CustomersTableWrapper'

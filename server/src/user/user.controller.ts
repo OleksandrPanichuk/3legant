@@ -1,8 +1,10 @@
 import { Controller, Get, HttpCode, HttpStatus, UseGuards, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserEntityWithAvatar } from './user.entity';
-import { CurrentUser, AccessTokenGuard, Roles } from '@/common';
+
 import { FindAllInput, FindAllResponse } from './dto';
+import { AccessTokenGuard } from '@/common/guard'
+import { CurrentUser, Roles } from '@/common/decorators'
 
 
 @Controller('users')

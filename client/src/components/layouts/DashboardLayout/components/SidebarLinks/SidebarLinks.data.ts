@@ -1,7 +1,7 @@
 import { BagIcon , SaleIcon } from "@/components/icons";
 import { Routes } from "@/shared/constants";
 import { IIconProps } from "@/shared/types";
-import {LayoutDashboard, LucideIcon, UserCircle} from 'lucide-react'
+import {LayoutDashboard, LucideIcon, ScrollText, UserCircle} from 'lucide-react'
 
 type TypeLink = {
     id: number 
@@ -31,6 +31,12 @@ export const sidebarLinks: TypeLink[] = [
     },
     {
         id:4,
+        text: 'Categories',
+        icon: ScrollText,
+        href: Routes.DASHBOARD_CATEGORIES
+    },
+    {
+        id:5,
         text: "Orders",
         icon: SaleIcon,
         href: Routes.DASHBOARD_ORDERS

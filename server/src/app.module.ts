@@ -1,19 +1,29 @@
-import { CacheModule } from '@nestjs/cache-manager';
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { cacheConfig } from '@/config';
-import { PrismaModule, UnauthorizedExceptionFilter, MailerModule, RolesGuard } from '@/common';
 
+import { cacheConfig } from '@/config'
+import { CacheModule } from '@nestjs/cache-manager'
+import { Module } from '@nestjs/common'
+import { ConfigModule } from '@nestjs/config'
 
-import { AuthModule } from './auth/auth.module';
-import { APP_FILTER, APP_GUARD } from '@nestjs/core';
-import { UserModule } from './user/user.module';
-import { CategoriesModule } from './categories/categories.module';
+import { APP_GUARD } from '@nestjs/core'
+import { AuthModule } from './auth/auth.module'
+import { CategoriesModule } from './categories/categories.module'
+import { ProductsModule } from './products/products.module'
+import { UserModule } from './user/user.module'
+import { StorageModule } from './common/storage'
+import { RolesGuard } from './common/guard'
+import { PrismaModule } from './common/prisma'
+import { MailerModule } from './common/mailer'
+import { MulterModule } from '@nestjs/platform-express'
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({
+	imports: [
+		ConfigModule.forRoot({
 			isGlobal: true,
+		}),
+		MulterModule.register({
+			limits: {
+				fileSize: 1_048_576 * 10
+			}
 		}),
 		CacheModule.register(cacheConfig),
 		PrismaModule,
@@ -21,16 +31,18 @@ import { CategoriesModule } from './categories/categories.module';
 		AuthModule,
 		UserModule,
 		CategoriesModule,
-  ],
-  providers: [
-	{
-		provide: APP_FILTER,
-		useClass: UnauthorizedExceptionFilter
-	},
-	{
-		provide:APP_GUARD,
-		useClass: RolesGuard
-	}
-  ],
+		ProductsModule,
+		StorageModule,
+	],
+	providers: [
+		// {
+		// 	provide: APP_FILTER,
+		// 	useClass: UnauthorizedExceptionFilter
+		// },
+		{
+			provide: APP_GUARD,
+			useClass: RolesGuard,
+		},
+	],
 })
 export class AppModule {}

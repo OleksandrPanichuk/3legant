@@ -44,7 +44,7 @@ export const PasswordForm = ({ code }: IPasswordFormProps) => {
 	return (
 		<Form {...form}>
 			<form className={styles.form} onSubmit={form.handleSubmit(onSubmit)}>
-				<Heading variant="h4">Reset Password</Heading>
+				<Heading>Reset Password</Heading>
 				<Typography weight={400}>Enter new password</Typography>
 				<FormField
 					control={form.control}

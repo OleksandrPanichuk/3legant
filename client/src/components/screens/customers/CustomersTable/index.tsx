@@ -1,5 +1,4 @@
 'use client'
-import { flexRender } from '@tanstack/react-table'
 import { TypeUser } from '@/shared/types'
 import {
 	Table,
@@ -8,29 +7,31 @@ import {
 	Td,
 	Th,
 	Thead,
-	Tr
+	Tr,
 } from '@chakra-ui/react'
+import { flexRender } from '@tanstack/react-table'
 
+import { useTable } from '@/hooks'
 import { columns } from './CustomersTable.columns'
-import { useCustomersTable } from './CustomersTable.hooks'
 import styles from './CustomersTable.module.scss'
+import { cn } from '@/lib'
 
 const CustomersTable = ({ data }: { data: TypeUser[] }) => {
-	const table = useCustomersTable(data)
+	const table = useTable(data, columns)
 	return (
-		<TableContainer className={styles.container}>
+		<TableContainer className={cn(styles.container, 'table-scrollbar')}>
 			<Table>
 				<Thead>
-					{table.getHeaderGroups().map((headerGroup) => (
+					{table.getHeaderGroups().map(headerGroup => (
 						<Tr key={headerGroup.id}>
-							{headerGroup.headers.map((header) => (
+							{headerGroup.headers.map(header => (
 								<Th key={header.id}>
 									{header.isPlaceholder
 										? null
 										: flexRender(
 												header.column.columnDef.header,
 												header.getContext()
-										  )}
+											)}
 								</Th>
 							))}
 						</Tr>
@@ -38,9 +39,9 @@ const CustomersTable = ({ data }: { data: TypeUser[] }) => {
 				</Thead>
 				<Tbody>
 					{table.getRowModel().rows?.length ? (
-						table.getRowModel().rows.map((row) => (
+						table.getRowModel().rows.map(row => (
 							<Tr key={row.id} data-state={row.getIsSelected() && 'selected'}>
-								{row.getVisibleCells().map((cell) => (
+								{row.getVisibleCells().map(cell => (
 									<Td key={cell.id}>
 										{flexRender(cell.column.columnDef.cell, cell.getContext())}
 									</Td>
@@ -49,7 +50,7 @@ const CustomersTable = ({ data }: { data: TypeUser[] }) => {
 						))
 					) : (
 						<Tr>
-							<Td colSpan={columns.length} className="h-24 text-center">
+							<Td colSpan={columns.length} className='h-24 text-center'>
 								No results.
 							</Td>
 						</Tr>
@@ -60,4 +61,4 @@ const CustomersTable = ({ data }: { data: TypeUser[] }) => {
 	)
 }
 
-export { columns, CustomersTable, useCustomersTable }
+export { CustomersTable, columns }

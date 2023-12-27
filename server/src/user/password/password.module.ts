@@ -1,14 +1,11 @@
-
-
-import { Module } from '@nestjs/common';
-import { PasswordController } from './password.controller';
-import { PasswordService } from './password.service';
-import { MailerModule } from '@/common';
-
+import { MailerModule } from '@/common/mailer'
+import { Module } from '@nestjs/common'
+import { PasswordController } from './password.controller'
+import { PasswordService } from './password.service'
 
 @Module({
-    imports: [MailerModule],
-    controllers: [PasswordController],
-    providers: [PasswordService],
+	imports: [MailerModule],
+	controllers: [PasswordController],
+	providers: [PasswordService],
 })
-export class PasswordModule {};
+export class PasswordModule {}

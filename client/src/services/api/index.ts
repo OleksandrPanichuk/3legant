@@ -1,4 +1,5 @@
 export * from './auth.service'
-export * from './user.service'
-export * from './password.service'
 export * from './categories.service'
+export * from './password.service'
+export * from './products.service'
+export * from './users.service'

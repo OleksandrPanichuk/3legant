@@ -37,7 +37,7 @@ export const EmailForm = () => {
 	return (
 		<Form {...form}>
 			<form className={styles.form} onSubmit={form.handleSubmit(onSubmit)}>
-				<Heading variant="h4">Forgot Password?</Heading>
+				<Heading>Forgot Password?</Heading>
 				<Typography weight={400}>
 					Enter your email and we&apos;ll send you a link to reset your password
 				</Typography>

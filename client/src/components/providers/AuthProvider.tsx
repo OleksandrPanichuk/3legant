@@ -1,49 +1,52 @@
 'use client'
-import { UserApi } from '@/services'
+import { UsersService } from '@/services'
 import { TypeUser } from '@/shared/types'
 import { useQuery } from '@tanstack/react-query'
 
+import { Loading } from '@/components/common'
 import {
 	Dispatch,
 	PropsWithChildren,
 	SetStateAction,
 	createContext,
 	useContext,
-	useState
+	useState,
 } from 'react'
-import { Loading } from '@/components/common'
 
 interface IAuthContext {
 	user: TypeUser | null
 	setUser: Dispatch<SetStateAction<TypeUser | null>>
 	isPending: boolean
 }
-
+interface IAuthProviderProps {
+	initialUser?: TypeUser
+}
 
 export const AuthContext = createContext<IAuthContext>({} as IAuthContext)
 
 export const AuthProvider = ({
-	children
-}: PropsWithChildren) => {
-	const [user, setUser] = useState<TypeUser | null>(null)
+	children,
+	initialUser,
+}: PropsWithChildren<IAuthProviderProps>) => {
+	const [user, setUser] = useState<TypeUser | null>(initialUser ?? null)
 
-	const { isPending } = useQuery({
+	const { isFetching } = useQuery({
 		queryKey: ['current-user'],
 		queryFn: async () => {
-			const response = await UserApi.currentUser()
+			const response = await UsersService.currentUser()
 			response.data && setUser(response.data)
 			return response
 		},
-		retry:false,
-		enabled: !user
+		retry: false,
+		enabled: !user,
 	})
 
-	if (isPending) {
+	if (isFetching) {
 		return <Loading />
 	}
 
 	return (
-		<AuthContext.Provider value={{ user, setUser, isPending }}>
+		<AuthContext.Provider value={{ user, setUser, isPending: isFetching }}>
 			{children}
 		</AuthContext.Provider>
 	)

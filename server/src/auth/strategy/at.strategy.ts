@@ -1,9 +1,9 @@
-import { PrismaService } from "@/common";
-import { ACCESS_TOKEN_SECRET, TOKENS } from "@/shared/constants";
+import { PrismaService } from "@/common/prisma"
+import { ACCESS_TOKEN_SECRET, TOKENS } from "@/shared/constants"
 
-import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { PassportStrategy } from "@nestjs/passport";
-import { Request } from "express";
+import { Injectable, UnauthorizedException } from "@nestjs/common"
+import { PassportStrategy } from "@nestjs/passport"
+import { Request } from "express"
 import { ExtractJwt, Strategy } from 'passport-jwt'
 
 

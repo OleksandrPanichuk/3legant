@@ -1,23 +1,27 @@
 'use client'
-import * as React from 'react'
 import { Slot } from '@radix-ui/react-slot'
+import * as React from 'react'
 import {
 	Controller,
 	ControllerProps,
 	FieldPath,
 	FieldValues,
 	FormProvider,
-	useFormContext
+	Path,
+	useFormContext,
 } from 'react-hook-form'
 import styles from './Form.module.scss'
 
+import { Input as MyInput, IInputProps as MyInputProps } from '@/components/ui'
 import { cn } from '@/lib'
+import { Input, InputProps } from '@chakra-ui/input'
+import { Textarea, TextareaProps } from '@chakra-ui/textarea'
 
 const Form = FormProvider
 
 type FormFieldContextValue<
 	TFieldValues extends FieldValues = FieldValues,
-	TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+	TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > = {
 	name: TName
 }
@@ -28,7 +32,7 @@ const FormFieldContext = React.createContext<FormFieldContextValue>(
 
 const FormField = <
 	TFieldValues extends FieldValues = FieldValues,
-	TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+	TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
 	...props
 }: ControllerProps<TFieldValues, TName>) => {
@@ -58,7 +62,7 @@ const useFormField = () => {
 		formItemId: `${id}-form-item`,
 		formDescriptionId: `${id}-form-item-description`,
 		formMessageId: `${id}-form-item-message`,
-		...fieldState
+		...fieldState,
 	}
 }
 
@@ -157,7 +161,7 @@ const FormLabel = React.forwardRef<
 		<label
 			ref={ref}
 			className={cn(
-				'text-sm font-medium',
+				'text-base font-medium',
 				error && styles['label--destructive'],
 				className
 			)}
@@ -168,13 +172,100 @@ const FormLabel = React.forwardRef<
 })
 FormLabel.displayName = 'FormLabel'
 
+interface IFormInputProps<T> extends MyInputProps {
+	name: Path<T>
+	label: string
+}
+
+const FormInput = <T extends FieldValues>({
+	name,
+	label,
+	...props
+}: IFormInputProps<T>) => {
+	const { control } = useFormContext<T>()
+	return (
+		<FormField
+			control={control}
+			name={name}
+			render={({ field }) => (
+				<FormItem>
+					<FormLabel>{label}</FormLabel>
+					<FormControl>
+						<MyInput {...field} {...props} />
+					</FormControl>
+					<FormMessage />
+				</FormItem>
+			)}
+		/>
+	)
+}
+
+interface IFormInputChakraProps<T> extends InputProps {
+	name: Path<T>
+	label: string
+}
+
+const FormInputChakra = <T extends FieldValues>({
+	name,
+	label,
+	...props
+}: IFormInputChakraProps<T>) => {
+	const { control } = useFormContext<T>()
+	return (
+		<FormField
+			control={control}
+			name={name}
+			render={({ field }) => (
+				<FormItem>
+					<FormLabel>{label}</FormLabel>
+					<FormControl>
+						<Input {...field} {...props} />
+					</FormControl>
+					<FormMessage />
+				</FormItem>
+			)}
+		/>
+	)
+}
+
+interface IFormTextareaProps<T> extends TextareaProps {
+	name: Path<T>
+	label: string
+}
+
+const FormTextarea = <T extends FieldValues>({
+	name,
+	label,
+	...props
+}: IFormTextareaProps<T>) => {
+	const { control } = useFormContext<T>()
+	return (
+		<FormField
+			control={control}
+			name={name}
+			render={({ field }) => (
+				<FormItem>
+					<FormLabel>{label}</FormLabel>
+					<FormControl>
+						<Textarea {...field} {...props} />
+					</FormControl>
+					<FormMessage />
+				</FormItem>
+			)}
+		/>
+	)
+}
+
 export {
-	useFormField,
 	Form,
-	FormItem,
 	FormControl,
 	FormDescription,
-	FormMessage,
 	FormField,
-	FormLabel
+	FormInput,
+	FormInputChakra,
+	FormItem,
+	FormLabel,
+	FormMessage,
+	FormTextarea,
+	useFormField,
 }

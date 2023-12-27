@@ -1,7 +1,10 @@
-import { MailerService, PrismaService, Redis, TypeRedis, bcrypt, generateErrorResponse } from '@/common';
+
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { ResetPasswordInput, SendResetPasswordLinkInput } from './dto';
 import { v4 as uuid } from 'uuid';
+import { Redis, TypeRedis, bcrypt, generateErrorResponse } from '@/common/helpers'
+import { MailerService } from '@/common/mailer'
+import { PrismaService } from '@/common/prisma'
 
 @Injectable()
 export class PasswordService {

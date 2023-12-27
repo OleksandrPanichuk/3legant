@@ -6,20 +6,18 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-	Typography
+	Typography,
 } from '@/components/ui'
-import { useFormContext } from 'react-hook-form'
 import Dropzone from 'react-dropzone'
+import { useFormContext } from 'react-hook-form'
 
-import styles from './PreviewImageDropzone.module.scss'
-import Image from 'next/image'
-import { cn } from '@/lib'
 import { useDataUrl } from '@/hooks'
+import { cn } from '@/lib'
+import Image from 'next/image'
+import styles from './PreviewImageDropzone.module.scss'
 
-
-
-export const PreviewImageDropzone = () => {
-	const {control} =  useFormContext()
+export const PreviewImageDropzone = ({ disabled }: { disabled?: boolean }) => {
+	const { control } = useFormContext()
 	const [src, getDataUrl] = useDataUrl()
 
 	return (
@@ -30,14 +28,15 @@ export const PreviewImageDropzone = () => {
 				<FormItem>
 					<FormLabel>Product preview image</FormLabel>
 					<Dropzone
-						onDrop={(files) => {
+						disabled={disabled}
+						onDrop={files => {
 							getDataUrl(files[0])
 							field.onChange(files[0])
 						}}
 						multiple={false}
 						maxFiles={1}
 						accept={{
-							'image/*': ['.jpeg', '.png', '.avif', '.svg', '.jpg', '.wepb']
+							'image/*': ['.jpeg', '.png', '.jpg', '.wepb'],
 						}}
 					>
 						{({ getRootProps, getInputProps }) => (
@@ -49,12 +48,14 @@ export const PreviewImageDropzone = () => {
 								)}
 							>
 								<FormControl>
-									<input {...getInputProps()} />
+									<input {...getInputProps()} disabled={disabled} />
 								</FormControl>
 								{src ? (
 									<Image fill src={src} alt={'product-preview-image'} />
 								) : (
-									<Typography className={styles.text}>Include a high-quality image.</Typography>
+									<Typography className={styles.text}>
+										Include a high-quality image.
+									</Typography>
 								)}
 							</div>
 						)}

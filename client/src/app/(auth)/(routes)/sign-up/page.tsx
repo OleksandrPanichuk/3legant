@@ -40,7 +40,7 @@ const SignUpPage = () => {
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className={styles.form}>
-				<Heading variant="h4">Sign Up</Heading>
+				<Heading>Sign Up</Heading>
 				<Typography weight={400}>
 					Already have an account?{' '}
 					<Link className={styles['sign-in']} prefetch href={Routes.SIGN_IN}>

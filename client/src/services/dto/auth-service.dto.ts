@@ -1,5 +1,5 @@
-import { TypeTokens, TypeUser } from "@/shared/types";
-import { z } from "zod";
+import { TypeTokens, TypeUser } from "@/shared/types"
+import { z } from "zod"
 
 
 
@@ -27,3 +27,8 @@ export type SignInResponse = SignUpResponse
 
 export type SignInInput  = z.infer<typeof signInSchema>
 export type SignUpInput = z.infer<typeof signUpSchema>
+
+
+export type RefreshTokenResponse = {
+    accessToken: string
+}

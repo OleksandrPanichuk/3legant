@@ -9,46 +9,47 @@
 		'clig' off,
 		'liga' off;
 }
-.hero {
+
+.heading-3xl {
 	@include adaptive-value('font-size', 72, 54);
 	line-height: 100%;
 	letter-spacing: -1.92px;
 }
-.h1 {
+.heading-2xl {
 	@include adaptive-value('font-size', 60, 45);
 	line-height: 105%;
 	letter-spacing: -3px;
 }
-.h2 {
+.heading-xl {
 	@include adaptive-value('font-size', 54, 40);
 	line-height: 105%;
 	letter-spacing: -2px;
 }
 
-.h3 {
+.heading-lg {
 	@include adaptive-value('font-size', 40, 30);
 	line-height: 107%;
 	letter-spacing: -1px;
 }
 
-.h4 {
+.heading-md {
 	@include adaptive-value('font-size', 30, 26);
 	line-height: 110%;
 	letter-spacing: -0.4px;
 }
-.h5 {
+.heading-base {
 	@include adaptive-value('font-size',26, 20);
 	line-height: 112%;
 	letter-spacing: -0.6px;
 }
 
-.h6 {
+.heading-sm {
 	@include adaptive-value('font-size', 20, 16);
 	line-height: 121%; /* 121.429% */
 	letter-spacing: -0.6px;
 }
 
-.h7 {
+.heading-xs {
 	@include adaptive-value('font-size', 16, 14);
 	font-weight: 500;
 	line-height: 140%;

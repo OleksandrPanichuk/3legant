@@ -1,7 +1,10 @@
-import { PrismaService, generateErrorResponse, omit } from '@/common';
+
 import { Injectable } from '@nestjs/common';
 import { FindAllInput, FindAllResponse } from './dto';
 import { Prisma } from '@prisma/client';
+import { PrismaService } from '@/common/prisma'
+import { omit } from '@/common/utils'
+import { generateErrorResponse } from '@/common/helpers'
 
 @Injectable()
 export class UserService {
