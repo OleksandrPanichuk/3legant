@@ -1,0 +1,16 @@
+@import '@/styles/variables.scss';
+
+.menu-open-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+button.item {
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+	&--delete {
+		color: rgba(red, .7 );
+	}
+}

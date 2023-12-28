@@ -13,5 +13,4 @@ export type TypeTokens = {
 
 export type FetchMoreState =
 	| 'can-fetch-more'
-	| 'can-fetch-one-more'
 	| 'cannot-fetch-more'

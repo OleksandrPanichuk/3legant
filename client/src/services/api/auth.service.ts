@@ -1,4 +1,4 @@
-import { axios } from '@/lib'
+import { axios, plainAxios } from '@/lib'
 import {
 	RefreshTokenResponse,
 	SignInInput,
@@ -44,7 +44,7 @@ export class AuthService {
 	static async refreshToken(
 		config: AxiosRequestConfig<RefreshTokenResponse> = {}
 	): Promise<AxiosResponse<RefreshTokenResponse>> {
-		return await axios.patch<RefreshTokenResponse>(
+		return await plainAxios.patch<RefreshTokenResponse>(
 			AuthServiceRoutes.REFRESH_TOKEN,
 			{},
 			config

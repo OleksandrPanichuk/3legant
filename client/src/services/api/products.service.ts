@@ -22,6 +22,8 @@ export class ProductsService {
 			return formData.append(key, String(value))
 		})
 
-		return await axios.post(ProductsServiceRoutes.PRODUCTS, formData)
+		return await axios.post(ProductsServiceRoutes.PRODUCTS, formData, {
+			headers: { 'Content-Type': 'multipart/form-data' },
+		})
 	}
 }

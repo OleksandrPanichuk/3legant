@@ -5,6 +5,7 @@ import { constructRootMetadata } from '@/shared/metadata'
 import type { Metadata, Viewport } from 'next'
 import { Inter, Poppins } from 'next/font/google'
 
+import { ConfirmModal } from '@/components/modals'
 import '@/styles/globals.scss'
 
 const inter = Inter({
@@ -37,7 +38,10 @@ export default async function RootLayout({
 	return (
 		<html lang='en'>
 			<body className={cn(inter.variable, poppins.variable)}>
-				<RootProviders initialUser={user}>{children}</RootProviders>
+				<RootProviders initialUser={user}>
+					<ConfirmModal />
+					{children}
+				</RootProviders>
 			</body>
 		</html>
 	)

@@ -22,7 +22,6 @@ type UseCategoriesResult = UseQueryResult<FindAllCategoriesResponse, Error> & {
 
 export const useCategories = (
 	searchValue?: string,
-	withPrefetch: boolean = true,
 	take: number = TAKE_CATEGORIES
 ): UseCategoriesResult => {
 	const queryClient = useQueryClient()
@@ -32,21 +31,14 @@ export const useCategories = (
 
 	const { isPlaceholderData, ...queryState } = useQuery({
 		queryKey: ['categories', page, take, searchValue],
-		queryFn: async () => {
-			const response = await CategoriesService.findAll({
+		queryFn:  () => 
+			 CategoriesService.findAll({
 				searchValue,
 				take,
 				skip: take * page,
 			})
-			if (
-				canFetchMore === 'can-fetch-one-more' ||
-				response.data.categories.length < take
-			) {
-				setCanFetchMore('cannot-fetch-more')
-			}
 
-			return response
-		},
+		,
 		placeholderData: keepPreviousData,
 		staleTime: 1000 * 60 * 30,
 		retry: false,
@@ -54,9 +46,22 @@ export const useCategories = (
 		enabled: canFetchMore !== 'cannot-fetch-more',
 	})
 
+	const maxPages = useMemo(() => {
+		if (!queryState.data?.count) return 1
+
+		return Math.ceil(queryState.data.count / take)
+	}, [queryState.data?.count, take])
+
 	const fetchNextPage = useCallback(() => {
-		setPage(prev => prev + 1)
-	}, [])
+		setPage(prev => {
+			if (prev + 2 <= maxPages) {
+				return prev + 1
+			}
+
+			return prev
+		})
+	}, [maxPages])
+
 	const fetchPrevPage = useCallback(() => {
 		if (page > 0) {
 			setCanFetchMore('can-fetch-more')
@@ -64,48 +69,33 @@ export const useCategories = (
 		setPage(prev => (prev > 0 ? prev - 1 : prev))
 	}, [page])
 
-	const maxPages = useMemo(() => {
-		if (!queryState.data?.count) return 1
-
-		return Math.ceil(queryState.data.count / take)
-	}, [queryState.data?.count, take])
-
 	useEffect(() => {
 		setPage(0)
 		setCanFetchMore('can-fetch-more')
 	}, [searchValue])
 
 	useEffect(() => {
-		if (!queryState.data) {
-			return
-		}
-		if (queryState.data.count <= (page + 1) * take) {
+		if (page + 2 > maxPages) {
 			setCanFetchMore('cannot-fetch-more')
+		} else if (canFetchMore !== 'can-fetch-more') {
+			setCanFetchMore('can-fetch-more')
 		}
-	}, [queryState.data, page, take])
+	}, [page, maxPages, canFetchMore])
 
 	useEffect(() => {
 		if (
 			!isPlaceholderData &&
-			withPrefetch &&
-			canFetchMore === 'can-fetch-more'
+			canFetchMore === 'can-fetch-more' &&
+			!searchValue
 		) {
 			queryClient.prefetchQuery({
-				queryKey: ['users', page + 1, searchValue],
-				queryFn: async () => {
-					const response = await CategoriesService.findAll({
+				queryKey: ['categories', page + 1, take, searchValue],
+				queryFn: () =>
+					CategoriesService.findAll({
 						searchValue,
 						take,
 						skip: (page + 1) * take,
-					})
-					if (response.data.categories.length === 0) {
-						setCanFetchMore('cannot-fetch-more')
-					} else if (response.data.categories.length < take) {
-						setCanFetchMore('can-fetch-one-more')
-					}
-
-					return response
-				},
+					}),
 				staleTime: 1000 * 60 * 30,
 			})
 		}
@@ -114,9 +104,7 @@ export const useCategories = (
 		page,
 		queryClient,
 		searchValue,
-		take,
-		withPrefetch,
-		canFetchMore,
+		take,	canFetchMore,
 	])
 
 	return {
@@ -127,6 +115,6 @@ export const useCategories = (
 		fetchNextPage,
 		fetchPrevPage,
 		maxPages,
-		take
+		take,
 	}
 }

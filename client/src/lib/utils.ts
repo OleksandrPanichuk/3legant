@@ -1,11 +1,10 @@
 import { APP_URL } from '@/shared/constants'
-import { type ClassValue, clsx } from 'clsx'
+import { clsx, type ClassValue } from 'clsx'
 
 export function cn(...inputs: ClassValue[]) {
 	return clsx(inputs)
 }
 
-
-export function absolutePath(path:string ) {
+export function absolutePath(path: string) {
 	return APP_URL + path
 }

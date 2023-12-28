@@ -3,14 +3,19 @@ import { CategoriesTable } from '@/components/screens/categories'
 import { Button } from '@/components/ui'
 import { useDebounce } from '@/hooks'
 import { useCategories } from '@/services'
+import { useDashboardStore } from '@/store'
 import { Flex, Input } from '@chakra-ui/react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styles from './CategoriesTableWrapper.module.scss'
 
 export const CategoriesTableWrapper = () => {
 	const [searchValue, setSearchValue] = useState<string>('')
 	const debouncedSearchValue = useDebounce(searchValue)
+
+	const setRefetchCategories = useDashboardStore(
+		state => state.setRefetchCategories
+	)
 	const {
 		data,
 		canFetchMore,
@@ -19,7 +24,12 @@ export const CategoriesTableWrapper = () => {
 		maxPages,
 		fetchPrevPage,
 		take,
+		refetch,
 	} = useCategories(debouncedSearchValue)
+
+	useEffect(() => {
+		setRefetchCategories(refetch)
+	}, [refetch, setRefetchCategories])
 
 	//TODO: Add something, when there is no data
 	if (!data) return null

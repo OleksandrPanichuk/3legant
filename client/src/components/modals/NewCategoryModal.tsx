@@ -29,7 +29,12 @@ export const NewCategoryModal = ({ children }: PropsWithChildren) => {
 		},
 	})
 
-	const { mutate: createCategory, isPending } = useCreateCategory()
+	const { mutate: createCategory, isPending } = useCreateCategory({
+		onSuccess:() => {
+			form.reset()
+			onClose()
+		}
+	})
 
 	const onSubmit = (values: CreateCategoryInput) => createCategory(values)
 
@@ -54,7 +59,7 @@ export const NewCategoryModal = ({ children }: PropsWithChildren) => {
 									isDisabled={isPending}
 									focusBorderColor='black'
 								/>
-								<Typography>*Reload the page for the new category to appear in the table </Typography>
+								
 							</ModalBody>
 							<ModalFooter display='flex' gap='0.5rem'>
 								<Button

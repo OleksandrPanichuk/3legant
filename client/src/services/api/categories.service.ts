@@ -32,7 +32,7 @@ export class CategoriesService {
 		newCategorySchema.parse(dto)
 		return await axios.post<TypeCategory>(
 			CategoriesServiceRoutes.CATEGORIES,
-			dto.name
+			dto
 		)
 	}
 
@@ -43,6 +43,12 @@ export class CategoriesService {
 		return await axios.put<TypeCategory>(
 			`${CategoriesServiceRoutes.CATEGORIES}/${dto.id}`,
 			{ name: dto.name }
+		)
+	}
+
+	static async delete(id: string): Promise<AxiosResponse<string>> {
+		return await axios.delete<string>(
+			`${CategoriesServiceRoutes.CATEGORIES}/${id}`
 		)
 	}
 }

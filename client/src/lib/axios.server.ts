@@ -1,5 +1,5 @@
 'use server'
-import { AuthServiceRoutes, RefreshTokenResponse } from '@/services'
+import { AuthService } from '@/services'
 import { API_URL, TOKENS } from '@/shared/constants'
 import axiosBase from 'axios'
 import { cookies } from 'next/headers'
@@ -24,7 +24,7 @@ axiosServer.interceptors.response.use(
 	config => config,
 	async error => {
 		const originalRequest = error.config
-
+		
 		if (
 			error?.response?.status === 401 &&
 			error.config &&
@@ -32,16 +32,11 @@ axiosServer.interceptors.response.use(
 		) {
 			originalRequest._isRetry = true
 			try {
-				const { data } = await axiosServer.patch<RefreshTokenResponse>(
-					AuthServiceRoutes.REFRESH_TOKEN,
-					{},
-					{
-						headers: {
-							Cookie: cookies().toString(),
-						},
-					}
-				)
-	
+				const { data } = await AuthService.refreshToken({
+					headers: {
+						Cookie: cookies().toString(),
+					},
+				})
 
 				return axiosServer.request({
 					...originalRequest,

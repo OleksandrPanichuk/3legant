@@ -5,7 +5,7 @@ import {
 	Injectable,
 	NotFoundException,
 } from '@nestjs/common'
-import { Category } from '@prisma/client'
+import { Category, ProductStatus } from '@prisma/client'
 import { FindAllInput, FindAllResponse } from './dto'
 
 @Injectable()
@@ -38,18 +38,15 @@ export class CategoriesService {
 
 	public async create(categoryName: string): Promise<Category> {
 		try {
-			console.log(categoryName)
 			const existingCategory = await this.prisma.category.findFirst({
 				where: {
 					name: {
 						equals: categoryName,
 						mode: 'insensitive',
-
 					},
 				},
 			})
 
-			console.log(existingCategory)
 			if (existingCategory) {
 				throw new ConflictException('Category with the same name already exist')
 			}
@@ -79,6 +76,63 @@ export class CategoriesService {
 					name: newName,
 				},
 			})
+		} catch (err) {
+			throw generateErrorResponse(err)
+		}
+	}
+
+	public async delete(categoryId: string) {
+		try {
+			const categoryToDelete = await this.prisma.category.findUnique({
+				where: {
+					id: categoryId,
+				},
+			})
+
+			if (!categoryToDelete) {
+				throw new NotFoundException('Category not found')
+			}
+
+			const productsToUpdate = await this.prisma.product.findMany({
+				where: {
+					categories: {
+						some: {
+							id: categoryId,
+						},
+					},
+				},
+				select: {
+					id: true,
+					_count: {
+						select: {
+							categories: true,
+						},
+					},
+				},
+			})
+
+			const filteredProducts = productsToUpdate
+				.filter(product => product._count.categories === 1)
+				.map(item => item?.id)
+
+			await this.prisma.product.updateMany({
+				where: {
+					id: {
+						in: filteredProducts,
+					},
+				},
+				data: {
+					status: ProductStatus.DRAFT,
+				},
+			})
+
+			await this.prisma.category.delete({
+				where: {
+					id: categoryId,
+				},
+			})
+
+			return `Category ${categoryToDelete.name} Deleted`
 		} catch (err) {
 			throw generateErrorResponse(err)
 		}

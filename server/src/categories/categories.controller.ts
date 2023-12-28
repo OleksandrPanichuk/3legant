@@ -2,6 +2,7 @@ import { Roles } from '@/common/decorators'
 import {
 	Body,
 	Controller,
+	Delete,
 	Get,
 	HttpCode,
 	HttpStatus,
@@ -36,5 +37,13 @@ export class CategoriesController {
 	@HttpCode(HttpStatus.OK)
 	update(@Param('id') categoryId:string, @Body('name') newName:string) {
 		return this.categoriesService.update(categoryId, newName)
+	}
+
+
+	@Roles(['MANAGER','ADMIN'])
+	@Delete(':id')
+	@HttpCode(HttpStatus.OK)
+	delete(@Param('id') categoryId:string) {
+		return this.categoriesService.delete(categoryId)
 	}
 }
