@@ -1,5 +1,3 @@
-'use server'
-
 import { UsersService } from '@/services'
 import { TypeUser } from '@/shared/types'
 

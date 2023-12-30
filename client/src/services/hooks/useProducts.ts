@@ -1,5 +1,9 @@
 'use client'
-import { FindAllUsersResponse, UsersService } from '@/services'
+import {
+	FindAllProductsInput,
+	FindAllProductsResponse,
+	ProductsService,
+} from '@/services'
 import { QueryBaseKeys } from '@/shared/constants'
 import { FetchMoreState } from '@/shared/types'
 import {
@@ -10,38 +14,45 @@ import {
 } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
-const TAKE_USERS = 10
+const TAKE_PRODUCTS = 12
 
-export type UseUsersResult = UseQueryResult<FindAllUsersResponse, Error> & {
+export type UseProductsResult = UseQueryResult<FindAllProductsResponse, Error> & {
 	page: number
 	maxPages: number
 	fetchNextPage: () => void
 	fetchPrevPage: () => void
 	canFetchMore: FetchMoreState
+	take: number
 }
 
-export const useUsers = (
-	searchValue?: string,
-	take: number = TAKE_USERS
-): UseUsersResult => {
+interface UseProductsInput
+	extends Omit<FindAllProductsInput, 'take' | 'skip'> {}
+
+export const useProducts = (
+	input?: UseProductsInput,
+	isDashboard: boolean = false,
+	take: number = TAKE_PRODUCTS
+): UseProductsResult => {
 	const queryClient = useQueryClient()
 	const [page, setPage] = useState<number>(0)
 	const [canFetchMore, setCanFetchMore] =
 		useState<FetchMoreState>('can-fetch-more')
 
-	const { isPlaceholderData, ...queryState } = useQuery({
-		placeholderData: keepPreviousData,
-		queryKey: [QueryBaseKeys.USERS, page, take, searchValue],
-		staleTime: 1000 * 60 * 30,
-		queryFn: () =>
-			UsersService.findAll({
-				searchValue,
-				take,
-				skip: page * take,
-			}),
+	const queryBaseKey = useMemo(() => {
+		return isDashboard
+			? QueryBaseKeys.DASHBOARD_PRODUCTS
+			: QueryBaseKeys.PRODUCTS
+	}, [isDashboard])
 
-		select: response => response.data,
+	const { isPlaceholderData, ...queryState } = useQuery({
+		queryKey: [queryBaseKey, page, take, input],
+		queryFn: () =>
+			ProductsService.findAll({ take, skip: page * take, ...input }),
+
+		placeholderData: keepPreviousData,
+		staleTime: 1000 * 60 * 30,
 		retry: false,
+		select: response => response.data,
 		enabled: canFetchMore !== 'cannot-fetch-more',
 	})
 
@@ -71,7 +82,7 @@ export const useUsers = (
 	useEffect(() => {
 		setPage(0)
 		setCanFetchMore('can-fetch-more')
-	}, [searchValue])
+	}, [input])
 
 	useEffect(() => {
 		if (page + 2 > maxPages) {
@@ -85,29 +96,37 @@ export const useUsers = (
 		if (
 			!isPlaceholderData &&
 			canFetchMore === 'can-fetch-more' &&
-			!searchValue
+			!input?.searchValue
 		) {
 			queryClient.prefetchQuery({
-				queryKey: [QueryBaseKeys.USERS, page + 1, take, searchValue],
+				queryKey: [queryBaseKey, page + 1, take, input],
 				queryFn: () =>
-					UsersService.findAll({
-						searchValue,
+					ProductsService.findAll({
 						take,
 						skip: (page + 1) * take,
+						...input,
 					}),
-
 				staleTime: 1000 * 60 * 30,
 			})
 		}
-	}, [isPlaceholderData, page, queryClient, searchValue, take, canFetchMore])
+	}, [
+		isPlaceholderData,
+		page,
+		queryClient,
+		input,
+		take,
+		canFetchMore,
+		queryBaseKey,
+	])
 
 	return {
 		...queryState,
-		maxPages,
 		isPlaceholderData,
+		canFetchMore,
 		page,
 		fetchNextPage,
 		fetchPrevPage,
-		canFetchMore,
+		maxPages,
+		take,
 	}
 }

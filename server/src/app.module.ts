@@ -1,19 +1,18 @@
-
 import { cacheConfig } from '@/config'
 import { CacheModule } from '@nestjs/cache-manager'
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 
 import { APP_GUARD } from '@nestjs/core'
+import { MulterModule } from '@nestjs/platform-express'
 import { AuthModule } from './auth/auth.module'
 import { CategoriesModule } from './categories/categories.module'
+import { RolesGuard } from './common/guard'
+import { MailerModule } from './common/mailer'
+import { PrismaModule } from './common/prisma'
+import { StorageModule } from './common/storage'
 import { ProductsModule } from './products/products.module'
 import { UserModule } from './user/user.module'
-import { StorageModule } from './common/storage'
-import { RolesGuard } from './common/guard'
-import { PrismaModule } from './common/prisma'
-import { MailerModule } from './common/mailer'
-import { MulterModule } from '@nestjs/platform-express'
 
 @Module({
 	imports: [
@@ -22,8 +21,8 @@ import { MulterModule } from '@nestjs/platform-express'
 		}),
 		MulterModule.register({
 			limits: {
-				fileSize: 1_048_576 * 10
-			}
+				fileSize: 1_048_576 * 10,
+			},
 		}),
 		CacheModule.register(cacheConfig),
 		PrismaModule,

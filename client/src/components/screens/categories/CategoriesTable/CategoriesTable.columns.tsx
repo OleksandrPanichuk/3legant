@@ -4,7 +4,6 @@ import { Button } from '@chakra-ui/react'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown } from 'lucide-react'
 
-
 export const getColumns = (
 	page: number,
 	take: number
@@ -42,7 +41,7 @@ export const getColumns = (
 		},
 		{
 			id: 'actions',
-			cell: function Actions({ row }) {
+			cell: ({ row }) => {
 				return <CategoryActions category={row.original} />
 			},
 		},

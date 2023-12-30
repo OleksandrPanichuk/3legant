@@ -1,4 +1,10 @@
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui'
+import {
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from '@/components/ui'
 import { CreateProductInput } from '@/services'
 import {
 	NumberDecrementStepper,
@@ -22,7 +28,10 @@ export const PackagesInput = ({ disabled }: { disabled?: boolean }) => {
 						<NumberInput
 							{...field}
 							isDisabled={disabled}
-							onChange={(_, valueNumber) => field.onChange(valueNumber)}
+							onChange={(_, valueNumber) =>
+								field.onChange(Number.isNaN(valueNumber) ? 0 : valueNumber)
+							}
+							min={0}
 						>
 							<NumberInputField />
 							<NumberInputStepper>

@@ -1,22 +1,36 @@
 import { Roles } from '@/common/decorators'
+import { TypeFile } from '@/shared/types'
 import {
 	Body,
 	Controller,
+	Get,
 	HttpCode,
 	HttpStatus,
 	ParseFilePipeBuilder,
 	Post,
+	Query,
 	UploadedFile,
 	UseInterceptors,
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
-import { CreateInput } from './dto'
+import { CreateInput, FindAllInput, FindAllResponse } from './dto'
 import { ProductsService } from './products.service'
-import { TypeFile } from '@/shared/types'
 
 @Controller('products')
 export class ProductsController {
 	constructor(private readonly productsService: ProductsService) {}
+
+	@Get('')
+	@HttpCode(HttpStatus.OK)
+	findAll(@Query('') dto: FindAllInput): Promise<FindAllResponse> {
+		return this.productsService.findAll(dto, false)
+	}
+
+	@Roles(['ADMIN', 'MANAGER'])
+	@Get('/admin')
+	findAllForDashboard(@Query('') dto: FindAllInput): Promise<FindAllResponse> {
+		return this.productsService.findAll(dto, false)
+	}
 
 	@Roles(['ADMIN', 'MANAGER'])
 	@UseInterceptors(FileInterceptor('previewImage'))

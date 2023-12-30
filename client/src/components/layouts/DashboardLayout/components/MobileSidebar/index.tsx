@@ -7,19 +7,27 @@ import {
 	DrawerContent,
 	DrawerOverlay,
 	IconButton,
-	useDisclosure
+	useDisclosure,
 } from '@chakra-ui/react'
 import { Menu as MenuIcon } from 'lucide-react'
-import styles from './MobileSidebar.module.scss'
+import { usePathname } from 'next/navigation'
+import { useEffect } from 'react'
 import { SidebarLinks } from '../SidebarLinks'
+import styles from './MobileSidebar.module.scss'
 
 export const MobileSidebar = () => {
 	const { onClose, onOpen, isOpen } = useDisclosure()
+	const pathname = usePathname()
+
+	useEffect(() => {
+		onClose()
+	}, [onClose, pathname])
+
 	return (
 		<>
 			<IconButton
 				backgroundColor={'transparent'}
-				aria-label="sidebar menu"
+				aria-label='sidebar menu'
 				onClick={onOpen}
 			>
 				<MenuIcon />

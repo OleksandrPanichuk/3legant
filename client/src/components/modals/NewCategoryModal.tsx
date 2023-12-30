@@ -1,5 +1,6 @@
-"use client"
-import { Button, Form, FormInputChakra, Typography } from '@/components/ui'
+'use client'
+import { Button, Form, FormInputChakra } from '@/components/ui'
+import { useModalChildren } from '@/hooks'
 import {
 	CreateCategoryInput,
 	newCategorySchema,
@@ -17,7 +18,7 @@ import {
 } from '@chakra-ui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
-import { PropsWithChildren, ReactElement, cloneElement } from 'react'
+import { PropsWithChildren } from 'react'
 import { useForm } from 'react-hook-form'
 
 export const NewCategoryModal = ({ children }: PropsWithChildren) => {
@@ -30,17 +31,15 @@ export const NewCategoryModal = ({ children }: PropsWithChildren) => {
 	})
 
 	const { mutate: createCategory, isPending } = useCreateCategory({
-		onSuccess:() => {
+		onSuccess: () => {
 			form.reset()
 			onClose()
-		}
+		},
 	})
 
 	const onSubmit = (values: CreateCategoryInput) => createCategory(values)
 
-	const childrenWithHandler = cloneElement(children as ReactElement, {
-		onClick: onOpen,
-	})
+	const childrenWithHandler = useModalChildren(children, onOpen)
 
 	return (
 		<>
@@ -59,7 +58,6 @@ export const NewCategoryModal = ({ children }: PropsWithChildren) => {
 									isDisabled={isPending}
 									focusBorderColor='black'
 								/>
-								
 							</ModalBody>
 							<ModalFooter display='flex' gap='0.5rem'>
 								<Button

@@ -1,15 +1,18 @@
 'use server'
+import { absolutePath } from '@/lib/utils'
 import { AuthService } from '@/services'
-import { API_URL, TOKENS } from '@/shared/constants'
+import { TOKENS } from '@/shared/constants'
 import axiosBase from 'axios'
 import { cookies } from 'next/headers'
+
+const API_URL = absolutePath('/api')
 
 export const axiosServer = axiosBase.create({
 	withCredentials: true,
 	baseURL: API_URL,
 	headers: {
-		"Content-Type":'application/json'
-	}
+		'Content-Type': 'application/json',
+	},
 })
 
 axiosServer.interceptors.request.use(function (config) {
@@ -24,7 +27,7 @@ axiosServer.interceptors.response.use(
 	config => config,
 	async error => {
 		const originalRequest = error.config
-		
+
 		if (
 			error?.response?.status === 401 &&
 			error.config &&

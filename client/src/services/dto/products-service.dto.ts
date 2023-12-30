@@ -1,3 +1,4 @@
+import { TypeProductWithImages } from '@/shared/types'
 import { z } from 'zod'
 
 export const createProductSchema = z.object({
@@ -25,7 +26,7 @@ export const createProductSchema = z.object({
 		.min(1, 'Height is required'),
 	length: z
 		.string({ required_error: 'Length is required' })
-		.min(1,'Length is required'),
+		.min(1, 'Length is required'),
 	weight: z
 		.string({ required_error: 'Weight is required' })
 		.min(1, 'Weight is required'),
@@ -41,3 +42,25 @@ export const createProductSchema = z.object({
 })
 
 export type CreateProductInput = z.infer<typeof createProductSchema>
+
+const pricesSchema = z.object({
+	start: z.number().nonnegative(),
+	end: z.number().nonnegative(),
+})
+
+export const findAllProductsSchema = z.object({
+	take: z.number().nonnegative().optional(),
+	skip: z.number().nonnegative().optional(),
+	searchValue: z.string().optional(),
+	category: z.string().optional(),
+	prices: z.array(pricesSchema).optional(),
+	sortBy: z.string().optional(),
+	sortOrder: z.enum(['asc', 'desc']).optional(),
+})
+
+export type FindAllProductsInput = z.infer<typeof findAllProductsSchema>
+
+export type FindAllProductsResponse = {
+	count: number
+	products: TypeProductWithImages[]
+}

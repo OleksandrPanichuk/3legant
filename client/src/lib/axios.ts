@@ -1,8 +1,10 @@
+import { absolutePath } from '@/lib/utils'
 import { AuthService } from '@/services'
-import { API_URL, TOKENS } from '@/shared/constants'
+import { TOKENS } from '@/shared/constants'
 import axiosBase from 'axios'
 import { getCookie } from 'cookies-next'
 
+const API_URL = absolutePath('/api')
 
 export const plainAxios = axiosBase.create({
 	withCredentials: true,
@@ -41,9 +43,7 @@ axios.interceptors.response.use(
 			try {
 				await AuthService.refreshToken()
 				return axios.request(originalRequest)
-			} catch (error) {
-				
-			}
+			} catch (error) {}
 		}
 		throw error
 	}

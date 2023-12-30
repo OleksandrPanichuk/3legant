@@ -1,5 +1,6 @@
 'use client'
 import { CategoriesService, FindAllCategoriesResponse } from '@/services'
+import { QueryBaseKeys } from '@/shared/constants'
 import { FetchMoreState } from '@/shared/types'
 import {
 	UseQueryResult,
@@ -11,7 +12,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 
 const TAKE_CATEGORIES = 10
 
-type UseCategoriesResult = UseQueryResult<FindAllCategoriesResponse, Error> & {
+export type UseCategoriesResult = UseQueryResult<FindAllCategoriesResponse, Error> & {
 	page: number
 	maxPages: number
 	fetchNextPage: () => void
@@ -30,15 +31,14 @@ export const useCategories = (
 		useState<FetchMoreState>('can-fetch-more')
 
 	const { isPlaceholderData, ...queryState } = useQuery({
-		queryKey: ['categories', page, take, searchValue],
-		queryFn:  () => 
-			 CategoriesService.findAll({
+		queryKey: [QueryBaseKeys.CATEGORIES, page, take, searchValue],
+		queryFn: () =>
+			CategoriesService.findAll({
 				searchValue,
 				take,
 				skip: take * page,
-			})
+			}),
 
-		,
 		placeholderData: keepPreviousData,
 		staleTime: 1000 * 60 * 30,
 		retry: false,
@@ -89,7 +89,7 @@ export const useCategories = (
 			!searchValue
 		) {
 			queryClient.prefetchQuery({
-				queryKey: ['categories', page + 1, take, searchValue],
+				queryKey: [QueryBaseKeys.CATEGORIES, page + 1, take, searchValue],
 				queryFn: () =>
 					CategoriesService.findAll({
 						searchValue,
@@ -99,13 +99,7 @@ export const useCategories = (
 				staleTime: 1000 * 60 * 30,
 			})
 		}
-	}, [
-		isPlaceholderData,
-		page,
-		queryClient,
-		searchValue,
-		take,	canFetchMore,
-	])
+	}, [isPlaceholderData, page, queryClient, searchValue, take, canFetchMore])
 
 	return {
 		...queryState,

@@ -1,11 +1,39 @@
 import { axios } from '@/lib'
-import { CreateProductInput, createProductSchema } from '@/services'
+import {
+	CreateProductInput,
+	FindAllProductsInput,
+	FindAllProductsResponse,
+	createProductSchema,
+	findAllProductsSchema,
+} from '@/services'
+import { AxiosResponse } from 'axios'
+import qs from 'query-string'
 
 export enum ProductsServiceRoutes {
 	PRODUCTS = '/products',
+	PRODUCTS_DASHBOARD = '/products/admin',
 }
 
 export class ProductsService {
+	static async findAll(
+		dto: FindAllProductsInput,
+		isDashboard: boolean = false
+	): Promise<AxiosResponse<FindAllProductsResponse>> {
+		findAllProductsSchema.parse(dto)
+
+		const url = qs.stringifyUrl({
+			url: isDashboard
+				? ProductsServiceRoutes.PRODUCTS_DASHBOARD
+				: ProductsServiceRoutes.PRODUCTS,
+			query: {
+				...dto,
+				prices: JSON.stringify(dto.prices),
+			},
+		})
+
+		return await axios.get<FindAllProductsResponse>(url)
+	}
+
 	static async create(dto: CreateProductInput) {
 		createProductSchema.parse(dto)
 

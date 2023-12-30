@@ -1,0 +1,66 @@
+@import '@/styles/mixins.scss';
+@import '@/styles/variables.scss';
+
+article.card {
+	flex-direction: row;
+	margin: 1rem 0;
+}
+
+.image {
+	flex: 50%;
+	height: 100%;
+	width: 100%;
+	background-color: $neutral-300;
+	display: flex;
+	place-items: center;
+	padding: 1rem;
+	&__wrapper {
+		width: 100%;
+		aspect-ratio: 1 / 1;
+		position: relative;
+	}
+}
+
+.content {
+	flex: 50%;
+	flex-direction: column;
+
+	@include truncate(2);
+}
+
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem;
+}
+.body {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+.footer {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+
+div.header, div.body {
+	padding-bottom: 0.5rem;
+}
+
+div.footer , div.body {
+	padding-top: 0.5rem
+}
+
+.time {
+}
+
+.price {
+	font-weight: bold;
+}
+
+.description {
+	@include truncate(5)
+}

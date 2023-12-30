@@ -1,1 +1,6 @@
-export * from './ProductsPage'
+export * from './ProductActions'
+export * from './ProductCard'
+export * from './ProductsFeed'
+export * from './ProductsFilters'
+export * from './ProductsPagination'
+export * from './ProductsProvider'
