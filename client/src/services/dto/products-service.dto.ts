@@ -1,3 +1,4 @@
+import { ProductStatuses } from '@/shared/constants'
 import { TypeProductWithImages } from '@/shared/types'
 import { z } from 'zod'
 
@@ -44,9 +45,11 @@ export const createProductSchema = z.object({
 export type CreateProductInput = z.infer<typeof createProductSchema>
 
 const pricesSchema = z.object({
-	start: z.number().nonnegative(),
-	end: z.number().nonnegative(),
+	start: z.number().nonnegative().optional(),
+	end: z.number().nonnegative().optional(),
 })
+
+export type TypeProductPrice = z.infer<typeof pricesSchema>
 
 export const findAllProductsSchema = z.object({
 	take: z.number().nonnegative().optional(),
@@ -56,7 +59,9 @@ export const findAllProductsSchema = z.object({
 	prices: z.array(pricesSchema).optional(),
 	sortBy: z.string().optional(),
 	sortOrder: z.enum(['asc', 'desc']).optional(),
+	status: z.enum(ProductStatuses).optional()
 })
+
 
 export type FindAllProductsInput = z.infer<typeof findAllProductsSchema>
 

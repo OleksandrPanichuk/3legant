@@ -3,17 +3,24 @@
 
 article.card {
 	flex-direction: row;
-	margin: 1rem 0;
+	cursor:pointer;
+
+	@include screen-sm-max {
+		flex-direction: column;
+	}
 }
 
 .image {
-	flex: 50%;
-	height: 100%;
 	width: 100%;
 	background-color: $neutral-300;
 	display: flex;
 	place-items: center;
 	padding: 1rem;
+
+	@include screen-sm {
+		flex: 50%;
+		height: 100%;
+	}
 	&__wrapper {
 		width: 100%;
 		aspect-ratio: 1 / 1;
@@ -45,16 +52,18 @@ article.card {
 	gap: 0.5rem;
 }
 
-
-div.header, div.body {
+div.header,
+div.body {
 	padding-bottom: 0.5rem;
 }
 
-div.footer , div.body {
-	padding-top: 0.5rem
+div.footer,
+div.body {
+	padding-top: 0.5rem;
 }
 
 .time {
+	color: $neutral-400;
 }
 
 .price {
@@ -62,5 +71,6 @@ div.footer , div.body {
 }
 
 .description {
-	@include truncate(5)
+	@include truncate(5);
 }
+

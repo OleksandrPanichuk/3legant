@@ -1,0 +1,20 @@
+@import '@/styles/mixins.scss';
+
+.list {
+	padding-inline: 4px;
+	max-width: 17.5rem;
+}
+
+.info {
+	padding-inline: 0.5rem;
+	flex-direction: column;
+}
+
+
+.username {
+	@include truncate(1);
+}
+
+.email {
+	@include truncate(1)
+}

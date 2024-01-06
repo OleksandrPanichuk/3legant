@@ -9,15 +9,18 @@ import {
 	ValidateNested,
 } from 'class-validator'
 import { ProductWithImages } from '../products.types'
+import { ProductStatus } from '@prisma/client'
 
 class ProductPrice {
+	@IsOptional()
 	@IsNumber()
 	@Min(0)
-	start: number
+	start?: number
 
+	@IsOptional()
 	@IsNumber()
 	@Min(0)
-	end: number
+	end?: number
 }
 
 export class FindAllInput {
@@ -46,6 +49,10 @@ export class FindAllInput {
 	@ValidateNested()
 	@IsArray()
 	prices?: ProductPrice[]
+
+	@IsOptional()
+	@IsEnum(ProductStatus)
+	status?: ProductStatus
 
 	@IsOptional()
 	@IsEnum(['title', 'price', 'createdAt'])

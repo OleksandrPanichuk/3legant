@@ -12,7 +12,10 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 
 const TAKE_CATEGORIES = 10
 
-export type UseCategoriesResult = UseQueryResult<FindAllCategoriesResponse, Error> & {
+export type UseCategoriesResult = UseQueryResult<
+	FindAllCategoriesResponse,
+	Error
+> & {
 	page: number
 	maxPages: number
 	fetchNextPage: () => void
@@ -29,6 +32,7 @@ export const useCategories = (
 	const [page, setPage] = useState<number>(0)
 	const [canFetchMore, setCanFetchMore] =
 		useState<FetchMoreState>('can-fetch-more')
+
 
 	const { isPlaceholderData, ...queryState } = useQuery({
 		queryKey: [QueryBaseKeys.CATEGORIES, page, take, searchValue],
@@ -96,6 +100,7 @@ export const useCategories = (
 						take,
 						skip: (page + 1) * take,
 					}),
+				retry: false,
 				staleTime: 1000 * 60 * 30,
 			})
 		}

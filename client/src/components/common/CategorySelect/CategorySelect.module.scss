@@ -1,0 +1,87 @@
+@import '@/styles/variables.scss';
+
+div.control {
+	background-color: white;
+	box-shadow: none;
+	border: none;
+	border-radius: 0.5rem;
+	height: 2.5rem;
+	min-width: 10rem;
+}
+
+.menu {
+	min-width: 10rem;
+}
+
+.indicator {
+	padding: 0.5rem;
+	svg {
+		width: 1rem;
+		height: 1rem;
+	}
+	&--open {
+		svg {
+			rotate: 180deg;
+		}
+	}
+}
+
+.menu-list {
+	padding: 0.25rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+div.option {
+	color: $neutral-400;
+	cursor: pointer;
+	border-radius: 0.5rem;
+	padding: 0.5rem 1rem;
+	transition: all 0.3s ease-in-out;
+
+	&--focused {
+		background-color: transparent;
+	}
+	&:hover {
+		color: $neutral-700;
+		background-color: rgba($color: $neutral-200, $alpha: 0.5);
+	}
+
+	&.option--selected {
+		background-color: $neutral-200 ;
+		color: $neutral-700;
+	}
+}
+
+.option-fetching {
+	pointer-events: none;
+	border-radius: 0.5rem;
+
+	padding: 0px 0.5rem !important;
+
+	&.option--selected,
+	&.option--focused,
+	&:hover {
+		background-color: transparent !important;
+	}
+}
+
+.option-error {
+	pointer-events: none !important;
+	&.option--selected,
+	&.option--focused,
+	&:hover {
+		background-color: transparent !important;
+	}
+}
+
+.skeleton {
+	border-radius: 0.5rem;
+	width: 100%;
+	height: 30px;
+}
+
+.error {
+	gap: 0.5rem;
+}

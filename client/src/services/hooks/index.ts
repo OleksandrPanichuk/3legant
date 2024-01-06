@@ -9,3 +9,5 @@ export * from './useSignIn'
 export * from './useSignUp'
 export * from './useUpdateCategory'
 export * from './useUsers'
+
+export * from './useUpdateUserRole'

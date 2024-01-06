@@ -49,8 +49,6 @@ export const CategoryActions = ({ category }: ICategoryActions) => {
 						onOpen({
 							onConfirm: () => deleteCategory(category.id),
 							isLoading: isPending,
-							buttonText: 'Delete',
-							buttonColorScheme: 'red',
 						})
 					}
 					className={cn(styles.item, styles['item--delete'])}

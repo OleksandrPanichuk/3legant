@@ -1,0 +1,12 @@
+@import '@/styles/mixins.scss';
+
+
+input.input {
+	background-color: white;
+	border:none;
+	border-radius: 0.5rem;
+
+	@include screen-sm {
+		max-width: 12.5rem;
+	}
+}

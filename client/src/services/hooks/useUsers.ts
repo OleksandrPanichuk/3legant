@@ -35,9 +35,9 @@ export const useUsers = (
 		staleTime: 1000 * 60 * 30,
 		queryFn: () =>
 			UsersService.findAll({
-				searchValue,
 				take,
 				skip: page * take,
+				searchValue,
 			}),
 
 		select: response => response.data,
@@ -91,15 +91,15 @@ export const useUsers = (
 				queryKey: [QueryBaseKeys.USERS, page + 1, take, searchValue],
 				queryFn: () =>
 					UsersService.findAll({
-						searchValue,
 						take,
 						skip: (page + 1) * take,
+						searchValue,
 					}),
-
+				retry: false,
 				staleTime: 1000 * 60 * 30,
 			})
 		}
-	}, [isPlaceholderData, page, queryClient, searchValue, take, canFetchMore])
+	}, [isPlaceholderData, page, queryClient, take, canFetchMore, searchValue])
 
 	return {
 		...queryState,

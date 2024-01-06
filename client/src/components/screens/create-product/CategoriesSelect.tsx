@@ -9,6 +9,7 @@ import {
 	Select,
 } from '@/components/ui'
 import { CategoriesService, CreateProductInput } from '@/services'
+import { QueryBaseKeys } from '@/shared/constants'
 import { Flex } from '@chakra-ui/react'
 import { useQuery } from '@tanstack/react-query'
 import { Loader2, XCircle } from 'lucide-react'
@@ -25,7 +26,7 @@ export const CategoriesSelect = ({ disabled }: { disabled?: boolean }) => {
 	const { control } = useFormContext<CreateProductInput>()
 
 	const { data, isFetching, isError } = useQuery({
-		queryKey: ['categories'],
+		queryKey: [QueryBaseKeys.CATEGORIES],
 		queryFn: () => CategoriesService.findAll(),
 		select: response => response.data,
 	})
@@ -43,7 +44,7 @@ export const CategoriesSelect = ({ disabled }: { disabled?: boolean }) => {
 							isDisabled={disabled}
 							onChange={options =>
 								field.onChange(
-									(options as unknown as MultiValue<TypeSelectOption>)?.map(
+									(options as MultiValue<TypeSelectOption>)?.map(
 										option => option.id
 									)
 								)

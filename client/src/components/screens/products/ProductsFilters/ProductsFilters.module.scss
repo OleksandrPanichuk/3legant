@@ -1,0 +1,15 @@
+@import '@/styles/mixins.scss';
+
+.wrapper {
+	margin: 0.5rem 0;
+	gap: 0.5rem;
+
+	@include screen-sm {
+		flex-wrap: wrap;
+	}
+
+	@include screen-sm-max {
+		gap: 0.25rem;
+		flex-direction: column;
+	}
+}

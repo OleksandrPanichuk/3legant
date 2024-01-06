@@ -1,5 +1,6 @@
 export * from './env'
 export * from './icons'
+export * from './data'
 export * from './routes'
 
 export const TOKENS = {
@@ -7,14 +8,14 @@ export const TOKENS = {
 	REFRESH_TOKEN: 'refresh_token',
 }
 
-
 export enum QueryBaseKeys {
 	CATEGORIES = 'categories',
 	USERS = 'users',
 	PRODUCTS = 'products',
-	DASHBOARD_PRODUCTS = 'products-dashboard'
+	DASHBOARD_PRODUCTS = 'products-dashboard',
 }
 
 export enum Images {
-	AUTH_IMAGE = '/auth-image.jpg'
+	AUTH_IMAGE = '/auth-image.jpg',
 }
+

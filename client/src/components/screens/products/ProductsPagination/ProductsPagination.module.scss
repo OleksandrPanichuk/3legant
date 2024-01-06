@@ -1,0 +1,30 @@
+@import '@/styles/variables.scss';
+
+.wrapper {
+	align-items: center;
+	margin: 0.5rem 0;
+	gap: 0.5rem;
+	justify-content: space-between;
+}
+
+.button {
+	&:disabled {
+		opacity: 0.5;
+		pointer-events: none;
+	}
+}
+
+.count {
+	background-color: $dark-100;
+	padding: 0.25rem 0.5rem;
+	color:  $gray-800;
+	border-radius:  0.25rem;
+
+	user-select: none;
+}
+
+
+
+.buttons {
+	gap: 0.5rem
+}

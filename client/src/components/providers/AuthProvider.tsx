@@ -1,6 +1,6 @@
 'use client'
 import { UsersService } from '@/services'
-import { TypeUser } from '@/shared/types'
+import { TypeUser, TypeUserWithAvatar } from '@/shared/types'
 import { useQuery } from '@tanstack/react-query'
 
 import { Loading } from '@/components/common'
@@ -14,7 +14,7 @@ import {
 } from 'react'
 
 interface IAuthContext {
-	user: TypeUser | null
+	user: TypeUserWithAvatar | null
 	setUser: Dispatch<SetStateAction<TypeUser | null>>
 	isPending: boolean
 }

@@ -2,29 +2,32 @@ import { axios, axiosServer } from '@/lib'
 import {
 	FindAllUsersInput,
 	FindAllUsersResponse,
+	UpdateUserRoleInput,
 	findAllUsersSchema,
+	updateUserRoleSchema,
 } from '@/services'
-import { TypeUser } from '@/shared/types'
+import { TypeUser, TypeUserWithAvatar } from '@/shared/types'
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
 import qs from 'query-string'
 
 export enum UsersServiceRoutes {
 	CURRENT_USER = '/users/me',
 	USERS = '/users',
+	ROLE = '/role',
 }
 
 export class UsersService {
 	static async currentUser(
 		isServer: boolean = false,
 		config: AxiosRequestConfig = {}
-	): Promise<AxiosResponse<TypeUser | undefined>> {
+	): Promise<AxiosResponse<TypeUserWithAvatar | undefined>> {
 		if (!isServer) {
-			return await axios.get<TypeUser | undefined>(
+			return await axios.get<TypeUserWithAvatar | undefined>(
 				UsersServiceRoutes.CURRENT_USER,
 				config
 			)
 		} else {
-			return await axiosServer.get<TypeUser | undefined>(
+			return await axiosServer.get<TypeUserWithAvatar | undefined>(
 				UsersServiceRoutes.CURRENT_USER,
 				config
 			)
@@ -42,5 +45,14 @@ export class UsersService {
 		})
 
 		return await axios.get<FindAllUsersResponse>(url)
+	}
+
+	static async updateRole(
+		dto: UpdateUserRoleInput
+	): Promise<AxiosResponse<TypeUser>> {
+		updateUserRoleSchema.parse(dto)
+		return await axios.patch<TypeUser>(
+			`${UsersServiceRoutes.USERS}/${dto.userId}${UsersServiceRoutes.ROLE}`, {role:dto.role}
+		)
 	}
 }

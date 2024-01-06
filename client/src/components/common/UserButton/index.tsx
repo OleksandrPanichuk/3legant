@@ -1,10 +1,12 @@
 'use client'
 
 import { useAuth } from '@/components/providers'
+import { Heading, Typography } from '@/components/ui'
 import { AuthService } from '@/services'
 import { Routes } from '@/shared/constants'
 import {
 	Avatar,
+	Flex,
 	Menu,
 	MenuButton,
 	MenuDivider,
@@ -18,6 +20,8 @@ import { LogOut as LogOutIcon } from 'lucide-react'
 import { redirect, useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { menuLinks } from './UserButton.data'
+
+import styles from './UserButton.module.scss'
 
 export const UserButton = () => {
 	const { user, isPending, setUser } = useAuth()
@@ -55,7 +59,12 @@ export const UserButton = () => {
 					src={user.avatar?.key}
 				/>
 			</MenuButton>
-			<MenuList paddingInline={'4px'}>
+			<MenuList className={styles.list}>
+				<Flex  className={styles.info}>
+					<Heading className={styles.username} size={'xs'} as='h5'>{user.name}</Heading>
+					<Typography className={styles.email} size={'sm'}>{user.email}</Typography>
+				</Flex>
+				<MenuDivider />
 				{menuLinks.map(link => {
 					const Icon = link.icon
 					return (

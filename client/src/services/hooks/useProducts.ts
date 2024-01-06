@@ -16,7 +16,10 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 
 const TAKE_PRODUCTS = 12
 
-export type UseProductsResult = UseQueryResult<FindAllProductsResponse, Error> & {
+export type UseProductsResult = UseQueryResult<
+	FindAllProductsResponse,
+	Error
+> & {
 	page: number
 	maxPages: number
 	fetchNextPage: () => void
@@ -64,6 +67,7 @@ export const useProducts = (
 
 	const fetchNextPage = useCallback(() => {
 		setPage(prev => {
+		
 			if (prev + 2 <= maxPages) {
 				return prev + 1
 			}
@@ -82,7 +86,14 @@ export const useProducts = (
 	useEffect(() => {
 		setPage(0)
 		setCanFetchMore('can-fetch-more')
-	}, [input])
+	}, [
+		input?.category,
+		input?.prices,
+		input?.searchValue,
+		input?.sortBy,
+		input?.sortOrder,
+		input?.status,
+	])
 
 	useEffect(() => {
 		if (page + 2 > maxPages) {
@@ -93,19 +104,16 @@ export const useProducts = (
 	}, [page, maxPages, canFetchMore])
 
 	useEffect(() => {
-		if (
-			!isPlaceholderData &&
-			canFetchMore === 'can-fetch-more' &&
-			!input?.searchValue
-		) {
+		if (!isPlaceholderData && canFetchMore === 'can-fetch-more' && !input?.searchValue) {
 			queryClient.prefetchQuery({
 				queryKey: [queryBaseKey, page + 1, take, input],
 				queryFn: () =>
 					ProductsService.findAll({
 						take,
 						skip: (page + 1) * take,
-						...input,
+						...input
 					}),
+				retry: false,
 				staleTime: 1000 * 60 * 30,
 			})
 		}

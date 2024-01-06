@@ -7,8 +7,11 @@ import { Badge, Flex } from '@chakra-ui/layout'
 import { Dot } from 'lucide-react'
 import Image from 'next/image'
 import { MemoExoticComponent, memo } from 'react'
-import { productStatus } from './ProductCard.data'
 
+import { Routes, productStatusMap } from '@/shared/constants'
+import { Skeleton, SkeletonText } from '@chakra-ui/react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import styles from './ProductCard.module.scss'
 
 interface IProductCardProps {
@@ -23,8 +26,15 @@ interface IProductCard
 //@ts-ignore
 export const ProductCard: IProductCard = memo(
 	({ product }: IProductCardProps) => {
+		const router = useRouter()
 		return (
-			<Card className={styles.card} as={'article'}>
+			<Card
+				onClick={() =>
+					router.push(`${Routes.DASHBOARD_PRODUCTS}/${product.id}`)
+				}
+				className={styles.card}
+				as={'article'}
+			>
 				<div className={styles.image}>
 					<div className={styles.image__wrapper}>
 						<Image
@@ -40,7 +50,12 @@ export const ProductCard: IProductCard = memo(
 				<Flex className={styles.content}>
 					<CardHeader className={styles.header}>
 						<Heading size={'sm'} as='h5'>
-							{product.title}
+							<Link
+								className={styles.link}
+								href={`${Routes.DASHBOARD_PRODUCTS}/${product.id}`}
+							>
+								{product.title}
+							</Link>
 						</Heading>
 						<ProductActions product={product} />
 					</CardHeader>
@@ -51,7 +66,9 @@ export const ProductCard: IProductCard = memo(
 						<Typography className={styles.description} size={'sm'}>
 							{product.description}
 						</Typography>
-						<Typography>Measurements: {product.measurements}</Typography>
+						<Typography size={'sm'}>
+							Measurements: {product.measurements}
+						</Typography>
 					</CardBody>
 					<CardFooter className={styles.footer}>
 						<time
@@ -61,8 +78,8 @@ export const ProductCard: IProductCard = memo(
 							{formatDate(product.createdAt)}
 						</time>
 						<Dot />
-						<Badge colorScheme={productStatus[product.status].colorScheme}>
-							{productStatus[product.status].text}
+						<Badge colorScheme={productStatusMap[product.status].colorScheme}>
+							{productStatusMap[product.status].text}
 						</Badge>
 					</CardFooter>
 				</Flex>
@@ -71,7 +88,9 @@ export const ProductCard: IProductCard = memo(
 	}
 )
 
-ProductCard.Skeleton = function Skeleton() {
+
+//TODO: Add Skeleton Component
+ProductCard.Skeleton = function ProductCardSkeleton() {
 	return <></>
 }
 

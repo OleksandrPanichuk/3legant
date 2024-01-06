@@ -1,0 +1,64 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.indicator {
+	padding: 0.5rem;
+	svg {
+		width: 1rem;
+		height: 1rem;
+	}
+	&--open {
+		svg {
+			rotate: 180deg;
+		}
+	}
+}
+
+div.control {
+	background-color: transparent;
+	box-shadow: none;
+	border: none;
+	height: 2.5rem;
+}
+.menu, div.control {
+	@include screen-sm {
+		min-width: 11rem;
+	}
+}
+
+.menu-list {
+	padding: 0.25rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+div.option {
+	color: $neutral-400;
+	cursor: pointer;
+	border-radius: 0.5rem;
+	padding: 0.5rem 1rem;
+	transition: all 0.3s ease-in-out;
+
+	&--focused {
+		background-color: transparent;
+	}
+	&:hover {
+		color: $neutral-700;
+		background-color: rgba($color: $neutral-200, $alpha: 0.5);
+	}
+
+	&.option--selected {
+		background-color: $neutral-200;
+		color: $neutral-700;
+	}
+}
+
+.value,
+div.placeholder {
+	color: $neutral-700;
+}
+
+div.clear-indicator {
+	padding: 0.5rem 0;
+}

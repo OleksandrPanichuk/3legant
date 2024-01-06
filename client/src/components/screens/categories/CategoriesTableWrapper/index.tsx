@@ -42,6 +42,7 @@ export const CategoriesTableWrapper = () => {
 					placeholder='Search categories'
 					value={searchValue}
 					onChange={e => setSearchValue(e.target.value)}
+					focusBorderColor='transparent'
 				/>
 				<Flex gap={'0.5rem'}>
 					<Button

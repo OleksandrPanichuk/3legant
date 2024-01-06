@@ -1,20 +1,11 @@
-import { Routes } from '@/shared/constants'
-import { TypeUser } from '@/shared/types'
-import {
-	Avatar,
-	Button,
-	Center,
-	IconButton,
-	Menu,
-	MenuButton,
-	MenuItem,
-	MenuList
-} from '@chakra-ui/react'
+import { CustomerActions } from '@/components/screens/customers'
+import { TypeUserWithAvatar } from '@/shared/types'
+import { Avatar, Badge, Button, Center } from '@chakra-ui/react'
 import { ColumnDef } from '@tanstack/react-table'
-import { ArrowUpDown, MoreHorizontal, UserCircle } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { ArrowUpDown } from 'lucide-react'
+import { roles } from './CustomersTable.data'
 
-export const columns: ColumnDef<TypeUser>[] = [
+export const columns: ColumnDef<TypeUserWithAvatar>[] = [
 	{
 		accessorKey: 'avatar',
 		header: () => {
@@ -38,7 +29,7 @@ export const columns: ColumnDef<TypeUser>[] = [
 					/>
 				</Center>
 			)
-		}
+		},
 	},
 	{
 		accessorKey: 'email',
@@ -53,7 +44,7 @@ export const columns: ColumnDef<TypeUser>[] = [
 					<ArrowUpDown />
 				</Button>
 			)
-		}
+		},
 	},
 	{
 		accessorKey: 'name',
@@ -68,7 +59,7 @@ export const columns: ColumnDef<TypeUser>[] = [
 					<ArrowUpDown />
 				</Button>
 			)
-		}
+		},
 	},
 	{
 		accessorKey: 'username',
@@ -83,37 +74,37 @@ export const columns: ColumnDef<TypeUser>[] = [
 					<ArrowUpDown />
 				</Button>
 			)
-		}
+		},
+	},
+	{
+		accessorKey: 'role',
+		header: ({ column }) => {
+			return (
+				<Button
+					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+					variant={'ghost'}
+					colorScheme='gray'
+				>
+					Role
+					<ArrowUpDown />
+				</Button>
+			)
+		},
+		cell: ({ row }) => {
+			const { role } = row.original
+			const roleData = roles[role]
+
+			return (
+				<Center>
+					<Badge colorScheme={roleData.colorScheme}>{roleData.text}</Badge>
+				</Center>
+			)
+		},
 	},
 	{
 		id: 'actions',
-		cell: function Actions({ row }) {
-			const { id } = row.original
-			const router = useRouter()
-
-			return (
-				<Menu placement="bottom-end">
-					<MenuButton
-						display={'flex'}
-						alignItems={'center'}
-						justifyContent={'center'}
-						as={IconButton}
-						aria-label="actions"
-					>
-						<Center>
-							<MoreHorizontal />
-						</Center>
-					</MenuButton>
-					<MenuList padding={'4px'}>
-						<MenuItem
-							onClick={() => router.push(`${Routes.PROFILE}/${id}`)}
-							icon={<UserCircle />}
-						>
-							Visit profile
-						</MenuItem>
-					</MenuList>
-				</Menu>
-			)
-		}
-	}
+		cell: ({ row }) => {
+			return <CustomerActions user={row.original} />
+		},
+	},
 ]

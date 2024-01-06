@@ -48,6 +48,12 @@
 	}
 }
 
+@mixin screen-lg-max {
+	@media screen and (max-width: $screen-lg) {
+		@content;
+	}
+}
+
 @mixin screen-sm {
 	@media screen and (min-width: $screen-sm) {
 		@content;

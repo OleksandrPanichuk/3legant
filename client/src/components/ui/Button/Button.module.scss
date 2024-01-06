@@ -83,6 +83,10 @@
 			outline-offset: 4px;
 		}
 	}
+	&-secondary {
+		background-color: white;
+		border: none;
+	}
 
 	&-ghost {
 		color: $gray-800;

@@ -17,4 +17,5 @@ export enum Routes {
     DASHBOARD_CATEGORIES = '/d/categories',
     CREATE_PRODUCT = '/d/products/create',
     EDIT = '/edit',
+    PRODUCTS= '/products'
 }

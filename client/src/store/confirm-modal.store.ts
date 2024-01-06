@@ -18,8 +18,8 @@ interface IConfirmModalStore extends IConfirmModalData {
 const defaultData: Omit<IConfirmModalData, 'onConfirm'> = {
 	title: 'Are you absolutely sure?',
 	description: 'This action cannot be undone. This will permanently delete it.',
-	buttonText: 'Confirm',
-	buttonColorScheme: 'blue',
+	buttonText: 'Delete',
+	buttonColorScheme: 'red',
 }
 
 export const useConfirmModal = create<IConfirmModalStore>(set => ({

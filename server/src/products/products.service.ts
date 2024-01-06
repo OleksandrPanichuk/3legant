@@ -25,7 +25,7 @@ export class ProductsService {
 						mode: 'insensitive',
 					},
 				}),
-				status: onlyVisible ? 'VISIBLE' : undefined,
+				status: onlyVisible ? 'VISIBLE' : dto.status,
 				...(!!dto.category && {
 					categories: {
 						some: {

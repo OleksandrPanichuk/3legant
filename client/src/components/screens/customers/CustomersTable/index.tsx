@@ -1,5 +1,5 @@
 'use client'
-import { TypeUser } from '@/shared/types'
+import { TypeUser, TypeUserWithAvatar } from '@/shared/types'
 import {
 	Table,
 	TableContainer,
@@ -16,7 +16,7 @@ import { columns } from './CustomersTable.columns'
 import styles from './CustomersTable.module.scss'
 import { cn } from '@/lib'
 
-const CustomersTable = ({ data }: { data: TypeUser[] }) => {
+const CustomersTable = ({ data }: { data: TypeUserWithAvatar[] }) => {
 	const table = useTable(data, columns)
 	return (
 		<TableContainer className={cn(styles.container, 'table-scrollbar')}>

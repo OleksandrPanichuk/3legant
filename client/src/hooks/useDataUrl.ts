@@ -6,8 +6,7 @@ export type UseDataUrlResult = [string | undefined, (files:File) => void]
 
 export const useDataUrl = (): UseDataUrlResult => {
     const [dataUrl, setDataUrl] = useState<string>()
-
-
+    
     const getDataUrl = useCallback((file: File) => {
         const reader = new FileReader()
 
