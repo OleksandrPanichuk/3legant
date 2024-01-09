@@ -1,11 +1,15 @@
 import { axios } from '@/lib'
 import {
-	CreateProductInput,
-	FindAllProductsInput,
-	FindAllProductsResponse,
+	UpdateProductInput,
+	UpdateProductResponse,
 	createProductSchema,
 	findAllProductsSchema,
+	updateProductSchema,
+	type CreateProductInput,
+	type FindAllProductsInput,
+	type FindAllProductsResponse,
 } from '@/services'
+import type { TypeFullProduct } from '@/shared/types'
 import { AxiosResponse } from 'axios'
 import qs from 'query-string'
 
@@ -34,6 +38,11 @@ export class ProductsService {
 		return await axios.get<FindAllProductsResponse>(url)
 	}
 
+	static async findById(id: string): Promise<AxiosResponse<TypeFullProduct>> {
+		const url = `${ProductsServiceRoutes.PRODUCTS}/${id}`
+		return axios.get<TypeFullProduct>(url)
+	}
+
 	static async create(dto: CreateProductInput) {
 		createProductSchema.parse(dto)
 
@@ -53,5 +62,14 @@ export class ProductsService {
 		return await axios.post(ProductsServiceRoutes.PRODUCTS, formData, {
 			headers: { 'Content-Type': 'multipart/form-data' },
 		})
+	}
+
+	static async update(
+		dto: UpdateProductInput,
+		id: string
+	): Promise<AxiosResponse<UpdateProductResponse>> {
+		updateProductSchema.parse(dto)
+		const url = `${ProductsServiceRoutes.PRODUCTS}/${id}`
+		return axios.patch<UpdateProductResponse>(url, dto)
 	}
 }

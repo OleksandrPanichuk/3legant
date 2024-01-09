@@ -24,7 +24,7 @@ export const CreateProductForm = () => {
 	const form = useForm<CreateProductInput>({
 		resolver: zodResolver(createProductSchema),
 	})
-	const { handleSubmit } = form
+	const { handleSubmit, control } = form
 
 	const { mutate: createProduct, isPending } = useCreateProduct()
 
@@ -35,12 +35,14 @@ export const CreateProductForm = () => {
 			<CardBody>
 				<Form {...form}>
 					<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-						<FormInputChakra<CreateProductInput>
+						<FormInputChakra
+							control={control}
 							name={'title'}
 							label={'Name'}
 							isDisabled={isPending}
 						/>
-						<FormTextarea<CreateProductInput>
+						<FormTextarea
+							control={control}
 							name={'description'}
 							label='Description'
 							maxHeight={'12.5rem'}
@@ -50,36 +52,42 @@ export const CreateProductForm = () => {
 						<PreviewImageDropzone disabled={isPending} />
 						<Flex className={styles['price-measurements']}>
 							<PriceInput disabled={isPending} />
-							<FormInputChakra<CreateProductInput>
+							<FormInputChakra
+								control={control}
 								placeholder='17 1/2x20 5/8 "'
 								name={'measurements'}
 								label={'Measurements'}
 								isDisabled={isPending}
 							/>
 						</Flex>
-						<FormTextarea<CreateProductInput>
+						<FormTextarea
 							name={'details'}
+							control={control}
 							label='Product details'
 							maxHeight={'12.5rem'}
 							isDisabled={isPending}
 						/>
 						<Grid className={styles.properties}>
-							<FormInputChakra<CreateProductInput>
+							<FormInputChakra
+								control={control}
 								name='weight'
 								label={'Weight'}
 								isDisabled={isPending}
 							/>
-							<FormInputChakra<CreateProductInput>
+							<FormInputChakra
+								control={control}
 								name='length'
 								label={'Length'}
 								isDisabled={isPending}
 							/>
-							<FormInputChakra<CreateProductInput>
+							<FormInputChakra
+								control={control}
 								name='width'
 								label={'Width'}
 								isDisabled={isPending}
 							/>
-							<FormInputChakra<CreateProductInput>
+							<FormInputChakra
+								control={control}
 								name='height'
 								label={'Height'}
 								isDisabled={isPending}
@@ -92,7 +100,6 @@ export const CreateProductForm = () => {
 								{isPending && <Loader2 className='animate-spin' />}
 								Submit
 							</Button>
-							
 						</Flex>
 					</form>
 				</Form>

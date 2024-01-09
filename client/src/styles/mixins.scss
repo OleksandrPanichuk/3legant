@@ -52,6 +52,10 @@
 	@media screen and (max-width: $screen-lg) {
 		@content;
 	}
+}@mixin screen-xl-max {
+	@media screen and (max-width: $screen-xl) {
+		@content;
+	}
 }
 
 @mixin screen-sm {

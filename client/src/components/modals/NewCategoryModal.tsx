@@ -52,7 +52,8 @@ export const NewCategoryModal = ({ children }: PropsWithChildren) => {
 					<Form {...form}>
 						<form onSubmit={form.handleSubmit(onSubmit)}>
 							<ModalBody>
-								<FormInputChakra<CreateCategoryInput>
+								<FormInputChakra
+									control={form.control}
 									name={'name'}
 									label='Category name'
 									isDisabled={isPending}

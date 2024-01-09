@@ -32,7 +32,7 @@ article.card {
 	flex: 50%;
 	flex-direction: column;
 
-	@include truncate(2);
+	@include truncate(1);
 }
 
 .header {

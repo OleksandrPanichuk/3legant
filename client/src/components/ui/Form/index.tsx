@@ -2,6 +2,7 @@
 import { Slot } from '@radix-ui/react-slot'
 import * as React from 'react'
 import {
+	Control,
 	Controller,
 	ControllerProps,
 	FieldPath,
@@ -15,6 +16,15 @@ import styles from './Form.module.scss'
 import { Input as MyInput, IInputProps as MyInputProps } from '@/components/ui'
 import { cn } from '@/lib'
 import { Input, InputProps } from '@chakra-ui/input'
+import {
+	NumberDecrementStepper,
+	NumberIncrementStepper,
+	NumberInput,
+	NumberInputField,
+	NumberInputFieldProps,
+	NumberInputProps,
+	NumberInputStepper,
+} from '@chakra-ui/react'
 import { Textarea, TextareaProps } from '@chakra-ui/textarea'
 
 const Form = FormProvider
@@ -200,17 +210,18 @@ const FormInput = <T extends FieldValues>({
 	)
 }
 
-interface IFormInputChakraProps<T> extends InputProps {
+interface IFormInputChakraProps<T extends FieldValues> extends InputProps {
 	name: Path<T>
+	control: Control<T>
 	label: string
 }
 
 const FormInputChakra = <T extends FieldValues>({
 	name,
 	label,
+	control,
 	...props
 }: IFormInputChakraProps<T>) => {
-	const { control } = useFormContext<T>()
 	return (
 		<FormField
 			control={control}
@@ -228,17 +239,18 @@ const FormInputChakra = <T extends FieldValues>({
 	)
 }
 
-interface IFormTextareaProps<T> extends TextareaProps {
+interface IFormTextareaProps<T extends FieldValues> extends TextareaProps {
 	name: Path<T>
+	control: Control<T>
 	label: string
 }
 
 const FormTextarea = <T extends FieldValues>({
 	name,
 	label,
+	control,
 	...props
 }: IFormTextareaProps<T>) => {
-	const { control } = useFormContext<T>()
 	return (
 		<FormField
 			control={control}
@@ -248,6 +260,51 @@ const FormTextarea = <T extends FieldValues>({
 					<FormLabel>{label}</FormLabel>
 					<FormControl>
 						<Textarea {...field} {...props} />
+					</FormControl>
+					<FormMessage />
+				</FormItem>
+			)}
+		/>
+	)
+}
+
+interface IFormNumberInputProps<T extends FieldValues>
+	extends NumberInputProps {
+	control: Control<T>
+	name: Path<T>
+	label: string
+	fieldProps?: NumberInputFieldProps
+}
+
+const FormNumberInput = <T extends FieldValues>({
+	control,
+	name,
+	label,
+	fieldProps,
+	...props
+}: IFormNumberInputProps<T>) => {
+	return (
+		<FormField
+			control={control}
+			name={name}
+			render={({ field }) => (
+				<FormItem>
+					<FormLabel>{label}</FormLabel>
+					<FormControl>
+						<NumberInput
+							{...props}
+							{...field}
+							onChange={(valString, valNumber) => {
+								field.onChange(valNumber || 0)
+								props?.onChange?.(valString, valNumber)
+							}}
+						>
+							<NumberInputField value={field.value} {...fieldProps} />
+							<NumberInputStepper>
+								<NumberIncrementStepper />
+								<NumberDecrementStepper />
+							</NumberInputStepper>
+						</NumberInput>
 					</FormControl>
 					<FormMessage />
 				</FormItem>
@@ -266,6 +323,7 @@ export {
 	FormItem,
 	FormLabel,
 	FormMessage,
+	FormNumberInput,
 	FormTextarea,
 	useFormField,
 }

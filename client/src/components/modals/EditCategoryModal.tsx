@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
-import { PropsWithChildren, useEffect } from 'react'
+import { PropsWithChildren } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -40,13 +40,13 @@ export const EditCategoryModal = ({
 	})
 	const {
 		handleSubmit,
-		setValue,
-		getValues,
+		control,
+		formState: { isDirty },
 	} = form
 
 	const { mutate: updateCategory, isPending } = useUpdateCategory({
-		onSuccess: () => {
-			form.reset()
+		onSuccess: ({ name }) => {
+			form.reset({ name })
 			onClose()
 		},
 	})
@@ -55,12 +55,6 @@ export const EditCategoryModal = ({
 		updateCategory({ id: data.id, ...values })
 
 	const childrenWithHandler = useModalChildren(children, onOpen)
-
-	useEffect(() => {
-		if (data.name !== getValues().name) {
-			setValue('name', data.name)
-		}
-	}, [data, getValues, setValue])
 
 	return (
 		<>
@@ -73,7 +67,8 @@ export const EditCategoryModal = ({
 					<Form {...form}>
 						<form onSubmit={handleSubmit(onSubmit)}>
 							<ModalBody>
-								<FormInputChakra<TypeFormData>
+								<FormInputChakra
+									control={control}
 									name='name'
 									label={'Category name'}
 									focusBorderColor='black'
@@ -89,7 +84,7 @@ export const EditCategoryModal = ({
 								>
 									Close
 								</Button>
-								<Button disabled={isPending || (getValues().name === data.name)} type={'submit'}>
+								<Button disabled={isPending || !isDirty} type={'submit'}>
 									{isPending && <Loader2 className='animate-spin' />}
 									Save
 								</Button>

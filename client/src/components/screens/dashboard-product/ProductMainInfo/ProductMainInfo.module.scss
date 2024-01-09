@@ -1,0 +1,37 @@
+.card {
+	background-color: white;
+
+}
+
+.main {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+
+
+input.field, textarea.field, .field {
+	&:disabled {
+		opacity: .75;
+		pointer-events: none;
+	}
+
+
+	&:focus-visible {
+		border-color: black;
+		box-shadow: none;
+	}
+}
+
+
+.description {
+	max-height: 12.5rem;
+	height: 100%
+}
+
+.footer {
+	display: flex;
+	justify-content: flex-end;
+	gap: 1rem;
+}

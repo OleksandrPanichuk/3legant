@@ -2,15 +2,24 @@ import { generateErrorResponse } from '@/common/helpers'
 import { PrismaService } from '@/common/prisma'
 import { StorageService } from '@/common/storage/storage.service'
 import { TypeFile } from '@/shared/types'
-import { Injectable } from '@nestjs/common'
+import { CACHE_MANAGER } from '@nestjs/cache-manager'
+import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { Prisma, Product } from '@prisma/client'
-import { CreateInput, FindAllInput, FindAllResponse } from './dto'
+import { Cache } from 'cache-manager'
+import {
+	CreateInput,
+	FindAllInput,
+	FindAllResponse,
+	FindByIdResponse,
+	UpdateInput,
+} from './dto'
 
 @Injectable()
 export class ProductsService {
 	constructor(
 		private prisma: PrismaService,
-		private storage: StorageService
+		private storage: StorageService,
+		@Inject(CACHE_MANAGER) private cacheManager: Cache
 	) {}
 
 	public async findAll(
@@ -71,10 +80,64 @@ export class ProductsService {
 		}
 	}
 
+	public async findById(id: string): Promise<FindByIdResponse> {
+		try {
+			const cachedProduct: FindByIdResponse | undefined =
+				await this.cacheManager.get(`product:${id}`)
+
+			if (cachedProduct) {
+				return cachedProduct
+			}
+
+			const product = await this.prisma.product.findUnique({
+				where: {
+					id,
+				},
+				include: {
+					categories: {
+						select: {
+							id: true,
+							name: true,
+						},
+					},
+					colors: {
+						select: {
+							id: true,
+							name: true,
+							image: {
+								select: {
+									key: true,
+									url: true,
+								},
+							},
+						},
+					},
+					images: {
+						select: {
+							id: true,
+							isPreview: true,
+							key: true,
+							url: true,
+						},
+					},
+					info: true,
+				},
+			})
+
+			if (!product) throw new NotFoundException('Product not found')
+
+			await this.cacheManager.set(`product:${id}`, product)
+
+			return product
+		} catch (err) {
+			throw generateErrorResponse(err)
+		}
+	}
+
 	public async create(dto: CreateInput, file: TypeFile): Promise<Product> {
 		const image = await this.storage.upload(file)
 		try {
-			const product = await this.prisma.product.create({
+			return await this.prisma.product.create({
 				data: {
 					title: dto.title,
 					description: dto.description,
@@ -101,8 +164,39 @@ export class ProductsService {
 					},
 				},
 			})
+		} catch (err) {
+			throw generateErrorResponse(err)
+		}
+	}
 
-			return product
+	public async update({ categories, ...dto }: UpdateInput, productId: string) {
+		try {
+			const product = await this.prisma.product.findUnique({
+				where: {
+					id: productId,
+				},
+				include: {
+					categories: true,
+				},
+			})
+
+			if (!product) throw new NotFoundException('Product not found')
+
+			await this.cacheManager.del(`product:${productId}`)
+			return await this.prisma.product.update({
+				where: {
+					id: productId,
+				},
+				data: {
+					...dto,
+					...(categories?.length && {
+						categories: {
+							disconnect: product.categories,
+							connect: categories.map(id => ({ id })),
+						},
+					}),
+				},
+			})
 		} catch (err) {
 			throw generateErrorResponse(err)
 		}

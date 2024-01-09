@@ -1,10 +1,12 @@
+import { TypeCategory } from "@/shared/types"
+
 export type ProductStatus = 'DRAFT' | 'VISIBLE' | 'HIDDEN'
 
 export type TypeProduct = {
 	id: string
 	title: string
 	description: string
-	price: number
+	price: string
 	measurements: string
 	status: ProductStatus
 	createdAt: Date
@@ -35,4 +37,26 @@ export type TypeProductWithImages = TypeProduct & {
 
 export type TypeProductWithInfo = TypeProduct & {
 	info: Omit<TypeProductInfo, 'id' | 'productId'>
+}
+
+export type TypeProductColor = {
+	id: string
+	name: string
+	productId: string
+}
+
+export type TypeProductColorImage = {
+	id: string
+	url: string
+	key: string
+	colorId: string
+}
+
+export type TypeFullProduct = TypeProduct & {
+	info: TypeProductInfo
+	categories: TypeCategory[]
+	images: Omit<TypeProductImage, 'productId'>[]
+	colors: (Omit<TypeProductColor, 'productId'> & {
+		image: Pick<TypeProductColorImage, 'url' | 'key'>
+	})[]
 }

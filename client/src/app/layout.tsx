@@ -1,6 +1,6 @@
 import { RootProviders } from '@/components/providers'
 import { cn } from '@/lib'
-import { currentUser } from '@/lib'
+import { currentUser } from '@/data'
 import { constructRootMetadata } from '@/shared/metadata'
 import type { Metadata, Viewport } from 'next'
 import { Inter, Poppins } from 'next/font/google'

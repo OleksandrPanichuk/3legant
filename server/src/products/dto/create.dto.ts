@@ -17,12 +17,14 @@ export class CreateInput {
 	title: string
 
 	@IsString()
-	@MinLength(200, { message: 'Description is too short (min 200 characters)' })
+	@MinLength(200, {
+		message: 'Description is too short (min length 200 characters)',
+	})
 	description: string
 
 	@IsString()
 	@MinLength(200, {
-		message: 'Detailed info is too short (min 200 characters)',
+		message: 'Detailed info is too short (min length 200 characters)',
 	})
 	details: string
 

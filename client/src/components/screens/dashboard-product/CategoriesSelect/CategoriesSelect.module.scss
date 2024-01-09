@@ -1,0 +1,60 @@
+@import '@/styles/variables.scss';
+
+div.control {
+	$borderColor: black;
+	border-radius: 0.375rem;
+	&--focused {
+		border-color: $borderColor;
+		box-shadow: none;
+		&:hover {
+			border-color: $borderColor;
+		}
+	}
+	&--disabled {
+		opacity: 0.75;
+		background-color: white;
+	}
+}
+
+.menu-list {
+	padding: 0.25rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+div.option {
+	color: $neutral-400;
+	cursor: pointer;
+	border-radius: 0.5rem;
+	padding: 0.5rem 1rem;
+	transition: all 0.3s ease-in-out;
+
+	&--focused {
+		background-color: transparent;
+	}
+	&:hover {
+		color: $neutral-700;
+		background-color: $neutral-200;
+	}
+}
+
+.option-fetching {
+	pointer-events: none;
+	border-radius: 0.5rem;
+
+	padding: 0px 0.5rem !important;
+
+	&.option--focused,
+	&:hover {
+		background-color: transparent !important;
+	}
+}
+
+.option-error {
+	pointer-events: none !important;
+	&.option--focused,
+	&:hover {
+		background-color: transparent !important;
+	}
+}

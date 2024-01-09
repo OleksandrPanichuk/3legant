@@ -6,14 +6,22 @@ import {
 	Get,
 	HttpCode,
 	HttpStatus,
+	Param,
 	ParseFilePipeBuilder,
+	Patch,
 	Post,
 	Query,
 	UploadedFile,
 	UseInterceptors,
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
-import { CreateInput, FindAllInput, FindAllResponse } from './dto'
+import {
+	CreateInput,
+	FindAllInput,
+	FindAllResponse,
+	FindByIdResponse,
+	UpdateInput,
+} from './dto'
 import { ProductsService } from './products.service'
 
 @Controller('products')
@@ -30,6 +38,11 @@ export class ProductsController {
 	@Get('/admin')
 	findAllForDashboard(@Query('') dto: FindAllInput): Promise<FindAllResponse> {
 		return this.productsService.findAll(dto, false)
+	}
+
+	@Get('/:productId')
+	findById(@Param('productId') productId: string): Promise<FindByIdResponse> {
+		return this.productsService.findById(productId)
 	}
 
 	@Roles(['ADMIN', 'MANAGER'])
@@ -50,5 +63,14 @@ export class ProductsController {
 		file: TypeFile
 	) {
 		return this.productsService.create(dto, file)
+	}
+
+
+
+	@Roles(['ADMIN','MANAGER'])
+	@Patch(':productId')
+	@HttpCode(HttpStatus.OK)
+	update(@Param('productId') productId:string, @Body() dto: UpdateInput) {
+		return this.productsService.update(dto, productId)
 	}
 }

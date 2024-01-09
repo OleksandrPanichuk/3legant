@@ -7,18 +7,23 @@ import styles from './ProductsFeed.module.scss'
 export const ProductsFeed = () => {
 	const { data, isFetching, take } = useProductsContext()
 	return (
-		<Grid className={styles.wrapper}>
+		<Grid   className={styles.wrapper}>
 			{!!data?.products.length &&
 				!isFetching &&
 				data?.products.map(product => (
+				
 					<ProductCard key={product.id} product={product} />
+				
 				))}
 
-			{isFetching && Array(take)
-				.fill(0)
-				.map((_, index) => (
-					<ProductCard.Skeleton key={index} />
-				))}
+			{isFetching &&
+				Array(take)
+					.fill(0)
+					.map((_, index) => (
+					
+						<ProductCard.Skeleton key={index} />
+						
+					))}
 		</Grid>
 	)
 }

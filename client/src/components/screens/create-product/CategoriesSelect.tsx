@@ -6,7 +6,6 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-	Select,
 } from '@/components/ui'
 import { CategoriesService, CreateProductInput } from '@/services'
 import { QueryBaseKeys } from '@/shared/constants'
@@ -14,13 +13,7 @@ import { Flex } from '@chakra-ui/react'
 import { useQuery } from '@tanstack/react-query'
 import { Loader2, XCircle } from 'lucide-react'
 import { useFormContext } from 'react-hook-form'
-import { MultiValue } from 'react-select'
-
-type TypeSelectOption = {
-	label: JSX.Element
-	value: string
-	id: string
-}
+import Select from 'react-select'
 
 export const CategoriesSelect = ({ disabled }: { disabled?: boolean }) => {
 	const { control } = useFormContext<CreateProductInput>()
@@ -39,15 +32,11 @@ export const CategoriesSelect = ({ disabled }: { disabled?: boolean }) => {
 				<FormItem>
 					<FormLabel>Categories</FormLabel>
 					<FormControl>
-						<Select<TypeSelectOption>
+						<Select
 							isMulti
 							isDisabled={disabled}
 							onChange={options =>
-								field.onChange(
-									(options as MultiValue<TypeSelectOption>)?.map(
-										option => option.id
-									)
-								)
+								field.onChange(options?.map(option => option.id))
 							}
 							options={
 								isFetching
