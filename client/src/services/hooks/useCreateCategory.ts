@@ -24,13 +24,15 @@ export const useCreateCategory = ({
 			onSuccess?.(data)
 		},
 		onError: error => {
-			if (error instanceof AxiosError && error.response?.data.message) {
-				return toast.error(error.response?.data.message)
+			if (error instanceof AxiosError) {
+				return toast.error(
+					error.response?.data.message ?? 'Failed to create new category'
+				)
 			}
 			if (error instanceof ZodError) {
 				return toast.error(error.message)
 			}
-			return toast.error('Failed to create new category')
+			return toast.error('Something went wrong')
 		},
 	})
 }

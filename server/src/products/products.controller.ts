@@ -20,6 +20,7 @@ import {
 	FindAllInput,
 	FindAllResponse,
 	FindByIdResponse,
+	UpdateInfoInput,
 	UpdateInput,
 } from './dto'
 import { ProductsService } from './products.service'
@@ -72,5 +73,13 @@ export class ProductsController {
 	@HttpCode(HttpStatus.OK)
 	update(@Param('productId') productId:string, @Body() dto: UpdateInput) {
 		return this.productsService.update(dto, productId)
+	}
+
+
+	@Roles(['ADMIN','MANAGER'])
+	@Patch(':productId/info')
+	@HttpCode(HttpStatus.OK)
+	updateInfo(@Param('productId') productId:string, @Body() dto:UpdateInfoInput) {
+		return this.productsService.updateInfo(dto,productId)
 	}
 }

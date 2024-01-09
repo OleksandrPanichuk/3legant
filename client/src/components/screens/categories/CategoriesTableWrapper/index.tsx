@@ -2,7 +2,7 @@
 import { CategoriesTable } from '@/components/screens/categories'
 import { Button } from '@/components/ui'
 import { useDebounce } from '@/hooks'
-import { useCategories } from '@/services'
+import { useCategoriesPagination } from '@/services'
 import { useDashboardStore } from '@/store'
 import { Flex, Input } from '@chakra-ui/react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
@@ -25,7 +25,7 @@ export const CategoriesTableWrapper = () => {
 		fetchPrevPage,
 		take,
 		refetch,
-	} = useCategories(debouncedSearchValue)
+	} = useCategoriesPagination(debouncedSearchValue)
 
 	useEffect(() => {
 		setRefetchCategories(refetch)

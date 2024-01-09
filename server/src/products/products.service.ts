@@ -4,13 +4,14 @@ import { StorageService } from '@/common/storage/storage.service'
 import { TypeFile } from '@/shared/types'
 import { CACHE_MANAGER } from '@nestjs/cache-manager'
 import { Inject, Injectable, NotFoundException } from '@nestjs/common'
-import { Prisma, Product } from '@prisma/client'
+import { Prisma, Product, ProductInfo } from '@prisma/client'
 import { Cache } from 'cache-manager'
 import {
 	CreateInput,
 	FindAllInput,
 	FindAllResponse,
 	FindByIdResponse,
+	UpdateInfoInput,
 	UpdateInput,
 } from './dto'
 
@@ -169,7 +170,7 @@ export class ProductsService {
 		}
 	}
 
-	public async update({ categories, ...dto }: UpdateInput, productId: string) {
+	public async update({ categories, ...dto }: UpdateInput, productId: string): Promise<Product> {
 		try {
 			const product = await this.prisma.product.findUnique({
 				where: {
@@ -196,6 +197,33 @@ export class ProductsService {
 						},
 					}),
 				},
+			})
+		} catch (err) {
+			throw generateErrorResponse(err)
+		}
+	}
+
+	public async updateInfo(dto: UpdateInfoInput, productId: string): Promise<ProductInfo> {
+		try {
+			const product = await this.prisma.product.findUnique({
+				where: {
+					id: productId,
+				},
+				include: {
+					info:true
+				}
+			})
+
+			if (!product || !product.info) throw new NotFoundException('Product not found')
+
+			await this.cacheManager.del(`product:${productId}`)
+
+			return await this.prisma.productInfo.update({
+				where: {
+					productId,
+					id: product.info.id
+				},
+				data: dto
 			})
 		} catch (err) {
 			throw generateErrorResponse(err)

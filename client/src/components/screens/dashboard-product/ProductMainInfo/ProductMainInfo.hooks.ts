@@ -1,19 +1,27 @@
 import {
+	CategoriesService,
 	UpdateProductInput,
 	updateProductSchema,
 	useUpdateProduct,
 } from '@/services'
-import { TypeCategory, TypeProduct } from '@/shared/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
 import { useProductContext } from '@/components/screens/dashboard-product'
+import { QueryBaseKeys } from '@/shared/constants'
+import { useQuery } from '@tanstack/react-query'
 import isEqual from 'lodash.isequal'
 import { toast } from 'sonner'
 
-export const useUpdateProductForm = (finallyFn: () => void) => {
+export const useUpdateProductForm = (finallyFn?: () => void) => {
 	const { mutateAsync } = useUpdateProduct()
 	const { product, setProduct } = useProductContext()
+
+	const { data: categories } = useQuery({
+		queryKey: [QueryBaseKeys.CATEGORIES],
+		queryFn: () => CategoriesService.findAll(),
+		select: response => response.data.categories,
+	})
 
 	const form = useForm<UpdateProductInput>({
 		resolver: zodResolver(updateProductSchema),
@@ -35,7 +43,7 @@ export const useUpdateProductForm = (finallyFn: () => void) => {
 					if (
 						!isEqual(
 							typeof value === 'number' ? String(value) : value,
-							//@ts-ignore 
+							//@ts-ignore
 							Array.isArray(product[key])
 								? //@ts-ignore
 									product[key].map(item => item.id)
@@ -58,13 +66,25 @@ export const useUpdateProductForm = (finallyFn: () => void) => {
 				...dataToUpdate,
 				productId: product.id,
 			})
-			setProduct(prev => ({ ...prev, ...data }))
+			setProduct(prev => ({
+				...prev,
+				...data,
+				categories: categories && values.categories
+					? values.categories.map(value => {
+							return categories.find(category => category.id === value)!
+						})
+					: prev.categories,
+			}))
 
-			form.reset({ ...data, price: parseFloat(data.price) })
+			form.reset({
+				...data,
+				price: parseFloat(data.price),
+				categories: values.categories,
+			})
 		} catch {
 			form.reset()
 		} finally {
-			finallyFn()
+			finallyFn?.()
 		}
 	}
 

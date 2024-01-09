@@ -13,7 +13,7 @@ import {
 } from 'react-hook-form'
 import styles from './Form.module.scss'
 
-import { Input as MyInput, IInputProps as MyInputProps } from '@/components/ui'
+import { Input as MyInput, IInputProps as MyInputProps, TextareaAutosize } from '@/components/ui'
 import { cn } from '@/lib'
 import { Input, InputProps } from '@chakra-ui/input'
 import {
@@ -259,7 +259,7 @@ const FormTextarea = <T extends FieldValues>({
 				<FormItem>
 					<FormLabel>{label}</FormLabel>
 					<FormControl>
-						<Textarea {...field} {...props} />
+						<TextareaAutosize {...field} {...props} />
 					</FormControl>
 					<FormMessage />
 				</FormItem>

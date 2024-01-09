@@ -24,13 +24,13 @@ export const useUpdateCategory = ({
 			onSuccess?.(data)
 		},
 		onError: error => {
-			if (error instanceof AxiosError && error.response?.data.message) {
-				return toast.error(error.response?.data.message)
+			if (error instanceof AxiosError) {
+				return toast.error(error.response?.data.message ?? 'Failed to update category')
 			}
 			if (error instanceof ZodError) {
 				return toast.error(error.message)
 			}
-			return toast.error('Failed to update category')
+			return toast.error('Something went wrong')
 		},
 	})
 }

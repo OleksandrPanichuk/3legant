@@ -19,11 +19,10 @@ import { Edit2, Loader2 } from 'lucide-react'
 import { useRef, useState } from 'react'
 import { useUpdateProductForm } from './ProductMainInfo.hooks'
 import styles from './ProductMainInfo.module.scss'
-import { cn } from '@/lib'
 
 export const ProductMainInfo = () => {
 	const [isEditing, setIsEditing] = useState<boolean>(false)
-	const ref = useRef<HTMLDivElement>(null)
+	const ref = useRef<HTMLFormElement>(null)
 	const { onSubmit, ...form } = useUpdateProductForm(() => setIsEditing(false))
 
 	useOutsideClick({
@@ -44,8 +43,8 @@ export const ProductMainInfo = () => {
 
 	return (
 		<Form {...form}>
-			<form onSubmit={handleSubmit(onSubmit)}>
-				<Card className={styles.card} as={'section'} ref={ref}>
+			<form onSubmit={handleSubmit(onSubmit)} ref={ref}>
+				<Card className={styles.card} as={'section'}>
 					<CardHeader>
 						<Heading as='h4' size={'sm'}>
 							Basic information about the product
@@ -71,11 +70,14 @@ export const ProductMainInfo = () => {
 							label='Description'
 							name={'description'}
 							isDisabled={disabled}
-							className={cn(styles.field, styles.description)}
+							className={styles.field}
 						/>
 						<FormNumberInput
 							control={control}
-							fieldProps={{placeholder: 'Enter the product price in $', className: styles.field }}
+							fieldProps={{
+								placeholder: 'Enter the product price in $',
+								className: styles.field,
+							}}
 							isDisabled={disabled}
 							name={'price'}
 							min={0}

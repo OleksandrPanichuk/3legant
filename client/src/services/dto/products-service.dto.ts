@@ -1,5 +1,5 @@
 import { ProductStatuses } from '@/shared/constants'
-import { TypeProduct, TypeProductWithImages } from '@/shared/types'
+import { TypeProduct, TypeProductInfo, TypeProductWithImages } from '@/shared/types'
 import { z } from 'zod'
 
 export const createProductSchema = z.object({
@@ -72,21 +72,51 @@ export type FindAllProductsResponse = {
 export const updateProductSchema = z.object({
 	title: z
 		.string({ required_error: 'Product name is required' })
-		.min(1, 'Product name is too short').optional(),
+		.min(1, 'Product name is too short')
+		.optional(),
 	description: z
 		.string({ required_error: 'Description is required' })
-		.min(200, 'Description is too short (min 200 characters)').optional(),
+		.min(200, 'Description is too short (min 200 characters)')
+		.optional(),
 	price: z
 		.number({ required_error: 'Price is required' })
 		.nonnegative('Price cannot be negative')
-		.min(5, 'The minimum price is $5').optional(),
+		.min(5, 'The minimum price is $5')
+		.optional(),
 	measurements: z
 		.string({ required_error: 'Measurements are required' })
-		.min(1, 'Measurements are required').optional(),
+		.min(1, 'Measurements are required')
+		.optional(),
 	categories: z
 		.array(z.string())
-		.min(1, 'Please, choose at least one category').optional(),
+		.min(1, 'Please, choose at least one category')
+		.optional(),
 })
 
 export type UpdateProductInput = z.infer<typeof updateProductSchema>
 export type UpdateProductResponse = TypeProduct
+
+export const updateProductInfoSchema = z.object({
+	details: z
+		.string({ required_error: 'Detailed info is required' })
+		.min(200, 'Detailed info is too short').optional(),
+	width: z
+		.string({ required_error: 'Width is required' })
+		.min(1, 'Width is required').optional(),
+	height: z
+		.string({ required_error: 'Height is required' })
+		.min(1, 'Height is required').optional(),
+	length: z
+		.string({ required_error: 'Length is required' })
+		.min(1, 'Length is required').optional(),
+	weight: z
+		.string({ required_error: 'Weight is required' })
+		.min(1, 'Weight is required').optional(),
+	packages: z
+		.number({ required_error: 'Packages count is required' })
+		.nonnegative('Packages count cannot be negative').optional(),
+})
+
+
+export type UpdateProductInfoInput = z.infer<typeof updateProductInfoSchema>
+export type UpdateProductInfoResponse = TypeProductInfo

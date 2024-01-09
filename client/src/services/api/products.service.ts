@@ -1,15 +1,18 @@
 import { axios } from '@/lib'
 import {
+	UpdateProductInfoInput,
+	UpdateProductInfoResponse,
 	UpdateProductInput,
 	UpdateProductResponse,
 	createProductSchema,
 	findAllProductsSchema,
+	updateProductInfoSchema,
 	updateProductSchema,
 	type CreateProductInput,
 	type FindAllProductsInput,
 	type FindAllProductsResponse,
 } from '@/services'
-import type { TypeFullProduct } from '@/shared/types'
+import type { TypeFullProduct, TypeProduct } from '@/shared/types'
 import { AxiosResponse } from 'axios'
 import qs from 'query-string'
 
@@ -59,9 +62,13 @@ export class ProductsService {
 			return formData.append(key, String(value))
 		})
 
-		return await axios.post(ProductsServiceRoutes.PRODUCTS, formData, {
-			headers: { 'Content-Type': 'multipart/form-data' },
-		})
+		return await axios.post<TypeProduct>(
+			ProductsServiceRoutes.PRODUCTS,
+			formData,
+			{
+				headers: { 'Content-Type': 'multipart/form-data' },
+			}
+		)
 	}
 
 	static async update(
@@ -70,6 +77,15 @@ export class ProductsService {
 	): Promise<AxiosResponse<UpdateProductResponse>> {
 		updateProductSchema.parse(dto)
 		const url = `${ProductsServiceRoutes.PRODUCTS}/${id}`
-		return axios.patch<UpdateProductResponse>(url, dto)
+		return await axios.patch<UpdateProductResponse>(url, dto)
+	}
+
+	static async updateInfo(
+		dto: UpdateProductInfoInput,
+		productId: string
+	): Promise<AxiosResponse<UpdateProductInfoResponse>> {
+		updateProductInfoSchema.parse(dto)
+		const url = `${ProductsServiceRoutes.PRODUCTS}/${productId}/info`
+		return await axios.patch<UpdateProductInfoResponse>(url, dto)
 	}
 }

@@ -12,7 +12,7 @@ import { CategoriesService, CreateProductInput } from '@/services'
 import { QueryBaseKeys } from '@/shared/constants'
 import { Flex } from '@chakra-ui/react'
 import { useQuery } from '@tanstack/react-query'
-import { Loader2, XCircle } from 'lucide-react'
+import { AlertCircle, Loader2 } from 'lucide-react'
 import { useFormContext } from 'react-hook-form'
 import Select from 'react-select'
 
@@ -21,6 +21,12 @@ import styles from './CategoriesSelect.module.scss'
 
 interface ICategoriesSelectProps {
 	disabled?: boolean
+}
+
+type TypeSelectOption = {
+	label: React.JSX.Element
+	value: string
+	id: string
 }
 
 export const CategoriesSelect = ({ disabled }: ICategoriesSelectProps) => {
@@ -33,13 +39,7 @@ export const CategoriesSelect = ({ disabled }: ICategoriesSelectProps) => {
 		select: response => response.data,
 	})
 
-	const getOptions = ():
-		| {
-				label: React.JSX.Element
-				value: string
-				id: string
-		  }[]
-		| undefined => {
+	const getOptions = (): TypeSelectOption[] | undefined => {
 		if (isFetching) {
 			return [
 				{
@@ -60,9 +60,8 @@ export const CategoriesSelect = ({ disabled }: ICategoriesSelectProps) => {
 					value: '',
 					id: '',
 					label: (
-						<Flex alignItems={'center'} gap={'0.5rem'}>
-							<XCircle color='#ff5630' />
-							Failed to get categories
+						<Flex className={styles.error}>
+							<AlertCircle color='red' /> Failed to get categories 
 						</Flex>
 					),
 				},
@@ -79,45 +78,58 @@ export const CategoriesSelect = ({ disabled }: ICategoriesSelectProps) => {
 		<FormField
 			control={control}
 			name={'categories'}
-			render={({ field }) => (
-				<FormItem>
-					<FormLabel>Categories</FormLabel>
-					<FormControl>
-						{/* TODO: Select value tracking */}
-						<Select
-							onChange={options =>
-								field.onChange(options?.map(option => option.id))
-							}
-							defaultValue={product.categories.map(category => ({
-								label: <>{category.name}</>,
-								value: category.name,
-								id: category.id,
-							}))}
-							classNames={{
-								control: props =>
-									cn(
-										styles.control,
-										props.isDisabled && styles['control--disabled'],
-										props.isFocused && styles['control--focused']
-									),
-								menuList: () => cn(styles['menu-list'], 'scrollbar'),
-								option: props =>
-									cn(
-										!isFetching && !isError && styles.option,
-										isFetching && styles['option-fetching'],
-										isError && styles['option-error'],
-										props.isFocused && styles['option--focused']
-									),
-							}}
-							placeholder={'Select categories for product'}
-							options={getOptions()}
-							isDisabled={disabled}
-							isMulti
-						/>
-					</FormControl>
-					<FormMessage />
-				</FormItem>
-			)}
+			render={({ field }) => {
+				const value = field.value.map(item => {
+					const categories = data
+						? data.categories
+						: product.categories
+
+					const category = categories.find(
+						category => category.id === item
+					)
+					
+
+					return {
+						label: <>{category?.name}</>,
+						value: category?.name,
+						id: category?.id,
+					}
+				})
+				return (
+					<FormItem>
+						<FormLabel>Categories</FormLabel>
+						<FormControl>
+							<Select
+								onChange={options =>
+									field.onChange(options?.map(option => option.id))
+								}
+								value={value}
+								classNames={{
+									control: props =>
+										cn(
+											styles.control,
+											props.isDisabled && styles['control--disabled'],
+											props.isFocused && styles['control--focused']
+										),
+									menuList: () => cn(styles['menu-list'], 'scrollbar'),
+									option: props =>
+										cn(
+											!isFetching && !isError && styles.option,
+											isFetching && styles['option-fetching'],
+											isError && styles['option-error'],
+											props.isFocused && styles['option--focused']
+										),
+								}}
+								placeholder={'Select categories for product'}
+								options={getOptions()}
+								isDisabled={disabled}
+								isMulti
+							/>
+						</FormControl>
+						<FormMessage />
+					</FormItem>
+				)
+			}}
 		/>
 	)
 }
