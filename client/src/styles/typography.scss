@@ -1,5 +1,5 @@
-@import '@/styles/variables.scss';
-@import '@/styles/mixins.scss';
+@import './variables.scss';
+@import './mixins.scss';
 
 .font {
 	&-thin {
@@ -70,7 +70,6 @@
 	}
 }
 
-
 .text {
 	&-neutral-100 {
 		color: $neutral-100;
@@ -85,7 +84,7 @@
 		color: $neutral-400;
 	}
 	&-neutral-500 {
-		color:$neutral-500;
+		color: $neutral-500;
 	}
 	&-neutral-600 {
 		color: $neutral-600;
@@ -94,6 +93,6 @@
 		color: $neutral-700;
 	}
 	&-primary {
-		color: $primary-color
+		color: $primary-color;
 	}
 }

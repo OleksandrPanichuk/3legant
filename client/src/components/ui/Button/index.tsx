@@ -1,22 +1,40 @@
-import { cn } from '@/lib/utils'
-import { Slot } from '@radix-ui/react-slot'
+import { cn } from '@/lib'
 import { type VariantProps } from 'class-variance-authority'
 import { forwardRef } from 'react'
+import styles from './Button.module.scss'
 import { buttonVariants } from './Button.variants'
-
 export interface IButtonProps
 	extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-		VariantProps<typeof buttonVariants> {
-	asChild?: boolean
-}
+		VariantProps<typeof buttonVariants> {}
 
 const Button = forwardRef<HTMLButtonElement, IButtonProps>(
-	({ className, variant, border, size, asChild = false, ...props }, ref) => {
-		const Comp = asChild ? Slot : 'button'
+	({ className, variant, border, size, onClick, ...props }, ref) => {
 		return (
-			<Comp
+			<button
 				className={cn(buttonVariants({ variant, border, size, className }))}
 				ref={ref}
+				onClick={function (e) {
+					onClick?.(e)
+
+					const button = e.currentTarget
+
+					const circle = document.createElement('span')
+					const diameter = Math.max(button.clientWidth, button.clientHeight)
+					const radius = diameter / 2
+
+					const position = button.getBoundingClientRect()
+
+					circle.style.width = circle.style.height = `${diameter}px`
+					circle.style.left = `${e.clientX - (position.x + radius)}px`
+					circle.style.top = `${e.clientY - (position.y + radius)}px`
+					circle.classList.add(styles.ripple)
+
+					button.appendChild(circle)
+
+					setTimeout(() => {
+						circle.remove()
+					}, 1000)
+				}}
 				{...props}
 			/>
 		)
