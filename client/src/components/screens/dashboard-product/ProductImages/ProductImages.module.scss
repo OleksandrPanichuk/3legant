@@ -1,0 +1,33 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.next,
+.prev {
+	color: $neutral-700;
+	&::after {
+		font-size: 1.5rem;
+	}
+}
+
+button.next {
+	right: 0;
+}
+
+button.prev {
+	left: 0;
+}
+.header {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.body {
+	padding: 0;
+}
+
+.heading {
+	flex: 1;
+}
+
+

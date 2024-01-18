@@ -1,5 +1,4 @@
-import { NewCategoryModal } from '@/components/modals'
-import { CategoriesTableWrapper } from '@/components/screens/categories'
+import { CategoriesTableWrapper, NewCategoryModal } from '@/components/screens/categories'
 import { Heading } from '@/components/ui'
 import { Button, Flex } from '@chakra-ui/react'
 import { Plus } from 'lucide-react'

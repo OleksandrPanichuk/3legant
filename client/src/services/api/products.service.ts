@@ -1,18 +1,28 @@
 import { axios } from '@/lib'
 import {
-	UpdateProductInfoInput,
-	UpdateProductInfoResponse,
-	UpdateProductInput,
-	UpdateProductResponse,
 	createProductSchema,
+	deleteProductImageSchema,
 	findAllProductsSchema,
+	updateProductImageStatusSchema,
 	updateProductInfoSchema,
 	updateProductSchema,
+	type AddProductImageInput,
+	type AddProductImageResponse,
 	type CreateProductInput,
+	type DeleteProductImageInput,
 	type FindAllProductsInput,
 	type FindAllProductsResponse,
+	type UpdateProductImageStatusInput,
+	type UpdateProductInfoInput,
+	type UpdateProductInfoResponse,
+	type UpdateProductInput,
+	type UpdateProductResponse,
 } from '@/services'
-import type { TypeFullProduct, TypeProduct } from '@/shared/types'
+import type {
+	TypeFullProduct,
+	TypeProduct,
+	TypeProductImage,
+} from '@/shared/types'
 import { AxiosResponse } from 'axios'
 import qs from 'query-string'
 
@@ -87,5 +97,39 @@ export class ProductsService {
 		updateProductInfoSchema.parse(dto)
 		const url = `${ProductsServiceRoutes.PRODUCTS}/${productId}/info`
 		return await axios.patch<UpdateProductInfoResponse>(url, dto)
+	}
+
+	static async addImage(
+		dto: AddProductImageInput,
+		productId: string
+	): Promise<AxiosResponse<AddProductImageResponse>> {
+		const formData = new FormData()
+
+		formData.append('image', dto.file)
+		formData.append('isPreview', JSON.stringify(dto.isPreview))
+
+		const url = `${ProductsServiceRoutes.PRODUCTS}/${productId}/images`
+		return await axios.post<AddProductImageResponse>(url, formData, {
+			headers: { 'Content-Type': 'multipart/form-data' },
+		})
+	}
+
+	static async deleteImage(
+		dto: DeleteProductImageInput
+	): Promise<AxiosResponse<string>> {
+		deleteProductImageSchema.parse(dto)
+
+		const url = `${ProductsServiceRoutes.PRODUCTS}/${dto.productId}/images/${dto.imageId}`
+		return await axios.delete<string>(url)
+	}
+
+	static async updateImageStatus(
+		dto: UpdateProductImageStatusInput
+	): Promise<AxiosResponse<TypeProductImage>> {
+		updateProductImageStatusSchema.parse(dto)
+
+		const url = `${ProductsServiceRoutes.PRODUCTS}/${dto.productId}/images/${dto.imageId}/status`
+
+		return await axios.patch<TypeProductImage>(url)
 	}
 }

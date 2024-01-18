@@ -1,6 +1,6 @@
 'use client'
-import { ChangeUserRoleModal } from '@/components/modals'
 import { useAuth } from '@/components/providers'
+import { ChangeUserRoleModal } from '@/components/screens/customers'
 import { Routes } from '@/shared/constants'
 import { TypeUser } from '@/shared/types'
 import {

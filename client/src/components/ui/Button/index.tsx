@@ -5,16 +5,25 @@ import styles from './Button.module.scss'
 import { buttonVariants } from './Button.variants'
 export interface IButtonProps
 	extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-		VariantProps<typeof buttonVariants> {}
+		VariantProps<typeof buttonVariants> {
+	animate?: boolean
+}
 
 const Button = forwardRef<HTMLButtonElement, IButtonProps>(
-	({ className, variant, border, size, onClick, ...props }, ref) => {
+	(
+		{ className, variant, border, size, onClick, animate = true, ...props },
+		ref
+	) => {
 		return (
 			<button
 				className={cn(buttonVariants({ variant, border, size, className }))}
 				ref={ref}
 				onClick={function (e) {
 					onClick?.(e)
+
+					if (!animate) {
+						return
+					}
 
 					const button = e.currentTarget
 

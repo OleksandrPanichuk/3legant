@@ -1,0 +1,50 @@
+@import '@/styles/mixins.scss';
+@import '@/styles/variables.scss';
+
+
+.inner {
+	max-width: 400px;
+	position: relative;
+	aspect-ratio: 1 / 1;
+	margin: auto;
+	@include screen-md {
+		@include adaptive-value('max-width', 550, 300);
+	}
+}
+
+.image {
+	object-fit: contain;
+	object-position: center;
+	@include screen-md-max {
+		padding: 2rem;
+	}
+}
+
+.toolbar {
+	opacity: 0.5;
+	position: absolute;
+	top: 5%;
+	padding: 0.25rem 0.5rem;
+	min-height: 1.5rem;
+	right: 5%;
+	transition: all 0.3s ease-in-out;
+
+	border-radius: 8px;
+	background-color: rgba($color: $neutral-200, $alpha: 0.7);
+
+	align-items: center;
+	gap: 0.5rem;
+
+	&:hover {
+		opacity: 1;
+	}
+}
+
+.delete {
+	color: rgba($color: $red-color, $alpha: 0.7);
+	transition: color 0.3s ease-in-out;
+
+	&:hover {
+		color: $red-color;
+	}
+}

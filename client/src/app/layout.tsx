@@ -1,11 +1,11 @@
 import { RootProviders } from '@/components/providers'
-import { cn } from '@/lib'
 import { currentUser } from '@/data'
+import { cn } from '@/lib'
 import { constructRootMetadata } from '@/shared/metadata'
 import type { Metadata, Viewport } from 'next'
 import { Inter, Poppins } from 'next/font/google'
 
-import { ConfirmModal } from '@/components/modals'
+import { ConfirmModal } from '@/components/common'
 import '@/styles/globals.scss'
 
 const inter = Inter({

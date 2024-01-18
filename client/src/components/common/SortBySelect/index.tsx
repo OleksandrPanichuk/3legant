@@ -1,3 +1,4 @@
+"use client"
 import { cn } from '@/lib'
 import { useDisclosure } from '@chakra-ui/react'
 import { ChevronDown } from 'lucide-react'

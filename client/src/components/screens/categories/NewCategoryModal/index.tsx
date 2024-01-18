@@ -4,7 +4,6 @@ import { useModalChildren } from '@/hooks'
 import {
 	CreateCategoryInput,
 	newCategorySchema,
-	useCreateCategory,
 } from '@/services'
 import {
 	Modal,
@@ -20,6 +19,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
 import { PropsWithChildren } from 'react'
 import { useForm } from 'react-hook-form'
+import { useCreateCategory } from './NewCategoryModal.hooks'
 
 export const NewCategoryModal = ({ children }: PropsWithChildren) => {
 	const { isOpen, onClose, onOpen } = useDisclosure()

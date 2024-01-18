@@ -1,13 +1,5 @@
 'use client'
 
-import { useForm } from 'react-hook-form'
-import {
-	IPasswordFormProps,
-	TypeFormData,
-	formSchema
-} from './PasswordForm.types'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { toast } from 'sonner'
 import {
 	Button,
 	Form,
@@ -19,9 +11,18 @@ import {
 	Input,
 	Typography
 } from '@/components/ui'
-import { useResetPassword } from '@/services'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import {
+	IPasswordFormProps,
+	TypeFormData,
+	formSchema
+} from './PasswordForm.types'
+
 import { Loader2 as LoaderIcon } from 'lucide-react'
 import styles from './PasswordForm.module.scss'
+import { useResetPassword } from './PasswordForm.hooks'
 
 export const PasswordForm = ({ code }: IPasswordFormProps) => {
 	const form = useForm<TypeFormData>({

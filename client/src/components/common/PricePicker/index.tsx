@@ -30,6 +30,7 @@ export const PricePicker = memo(({ value, setValue }: IPricePickerProps) => {
 		<Popover isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
 			<PopoverTrigger>
 				<Button
+					animate={false}
 					size={'sm'}
 					className={cn(styles.trigger, isOpen && styles['trigger--open'])}
 					variant='secondary'

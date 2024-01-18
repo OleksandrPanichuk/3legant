@@ -21,8 +21,9 @@ import {
 	Loader2 as LoaderIcon
 } from 'lucide-react'
 import { cn } from '@/lib'
-import { useSendResetPasswordLink } from '@/services'
+
 import styles from './EmailForm.module.scss'
+import { useSendResetPasswordLink } from './EmailForm.hooks'
 
 export const EmailForm = () => {
 	const form = useForm<TypeFormData>({

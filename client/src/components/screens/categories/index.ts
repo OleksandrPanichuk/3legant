@@ -1,3 +1,5 @@
 export * from './CategoriesTable'
 export * from './CategoriesTableWrapper'
 export * from './CategoryActions'
+export * from './EditCategoryModal'
+export * from './NewCategoryModal'

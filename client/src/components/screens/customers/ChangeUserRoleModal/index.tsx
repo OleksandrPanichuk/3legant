@@ -11,7 +11,7 @@ import {
 } from '@/components/ui'
 import Select from 'react-select'
 import { useModalChildren } from '@/hooks'
-import { updateUserRoleSchema, useUpdateUserRole } from '@/services'
+import { updateUserRoleSchema } from '@/services'
 import { UserRole } from '@/shared/types'
 import {
 	Modal,
@@ -29,6 +29,9 @@ import { PropsWithChildren, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { SingleValue } from 'react-select'
 import { z } from 'zod'
+import { useUpdateUserRole } from './ChangeUserRoleModal.hooks'
+
+
 
 interface IChangeUserRoleModal {
 	userId: string

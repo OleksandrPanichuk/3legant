@@ -12,7 +12,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 
 const TAKE_CATEGORIES = 10
 
-export type UseCategoriesPaginationResult = UseQueryResult<
+export type UseCategoriesResult = UseQueryResult<
 	FindAllCategoriesResponse,
 	Error
 > & {
@@ -24,10 +24,10 @@ export type UseCategoriesPaginationResult = UseQueryResult<
 	take: number
 }
 
-export const useCategoriesPagination = (
+export const useCategories = (
 	searchValue?: string,
 	take: number = TAKE_CATEGORIES
-): UseCategoriesPaginationResult => {
+): UseCategoriesResult => {
 	const queryClient = useQueryClient()
 	const [page, setPage] = useState<number>(0)
 	const [canFetchMore, setCanFetchMore] =

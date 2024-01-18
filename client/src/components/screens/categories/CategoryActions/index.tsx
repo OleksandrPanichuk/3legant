@@ -1,8 +1,8 @@
-import { EditCategoryModal } from '@/components/modals'
+import { EditCategoryModal } from '@/components/screens/categories'
 import { cn } from '@/lib'
-import { useDeleteCategory } from '@/services'
+
 import { TypeCategory } from '@/shared/types'
-import { useConfirmModal, useDashboardStore } from '@/store'
+import { useConfirmModal } from '@/store'
 import {
 	Center,
 	IconButton,
@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react'
 import { Edit, MoreHorizontal, Trash } from 'lucide-react'
 import styles from './CategoryActions.module.scss'
+import { useDeleteCategory } from './CategoryActions.hooks'
 
 interface ICategoryActions {
 	category: TypeCategory
@@ -21,7 +22,6 @@ interface ICategoryActions {
 
 export const CategoryActions = ({ category }: ICategoryActions) => {
 	const onOpen = useConfirmModal(state => state.onOpen)
-
 
 	const { mutate: deleteCategory, isPending } = useDeleteCategory()
 

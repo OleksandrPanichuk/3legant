@@ -2,7 +2,7 @@
 
 import { Button, Form, FormInputChakra } from '@/components/ui'
 import { useModalChildren } from '@/hooks'
-import { updateCategorySchema, useUpdateCategory } from '@/services'
+import { updateCategorySchema } from '@/services'
 import { TypeCategory } from '@/shared/types'
 import {
 	Modal,
@@ -19,6 +19,7 @@ import { Loader2 } from 'lucide-react'
 import { PropsWithChildren } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { useUpdateCategory } from './EditCategoryModal.hooks'
 
 interface IEditCategoryModalProps {
 	data: TypeCategory

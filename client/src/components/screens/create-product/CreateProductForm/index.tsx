@@ -10,7 +10,6 @@ import { Button, Form, FormInputChakra, FormTextarea } from '@/components/ui'
 import {
 	CreateProductInput,
 	createProductSchema,
-	useCreateProduct,
 } from '@/services'
 import { Card, CardBody } from '@chakra-ui/card'
 import { Flex, Grid } from '@chakra-ui/react'
@@ -19,6 +18,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import styles from './CreateProductForm.module.scss'
+import { useCreateProduct } from './CreateProductForm.hooks'
 
 export const CreateProductForm = () => {
 	const form = useForm<CreateProductInput>({

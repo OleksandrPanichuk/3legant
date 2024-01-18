@@ -1,6 +1,7 @@
 import {
 	ProductAdditionalInfo,
 	ProductColors,
+	ProductImages,
 	ProductMainInfo,
 	ProductProvider,
 } from '@/components/screens/dashboard-product'
@@ -26,6 +27,7 @@ export const ProductView = async ({ productId }: IProductViewProps) => {
 				</Heading>
 				<ProductMainInfo />
 				<ProductAdditionalInfo />
+				<ProductImages />
 				<ProductColors />
 			</Flex>
 		</ProductProvider>

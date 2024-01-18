@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, cloneElement, MouseEvent } from 'react'
+import { MouseEvent, ReactElement, ReactNode, cloneElement } from 'react'
 
 export const useModalChildren = (
 	children: ReactNode,
