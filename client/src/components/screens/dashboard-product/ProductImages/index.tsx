@@ -17,7 +17,6 @@ import 'swiper/scss/navigation'
 
 export const ProductImages = () => {
 	const { product } = useProductContext()
-
 	return (
 		<Card backgroundColor={'white'}>
 			<CardHeader className={styles.header}>

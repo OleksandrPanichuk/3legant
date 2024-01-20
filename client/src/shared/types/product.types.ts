@@ -1,4 +1,4 @@
-import { TypeCategory } from "@/shared/types"
+import { TypeCategory } from '@/shared/types'
 
 export type ProductStatus = 'DRAFT' | 'VISIBLE' | 'HIDDEN'
 
@@ -50,6 +50,10 @@ export type TypeProductColorImage = {
 	url: string
 	key: string
 	colorId: string
+}
+
+export type TypeFullProductColor = TypeProductColor & {
+	image: TypeProductColorImage
 }
 
 export type TypeFullProduct = TypeProduct & {

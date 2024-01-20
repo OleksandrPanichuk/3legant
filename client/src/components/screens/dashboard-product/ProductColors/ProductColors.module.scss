@@ -1,0 +1,30 @@
+@import '@/styles/mixins.scss';
+
+.header {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.heading {
+	flex: 1;
+}
+
+.grid {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+
+	@include screen-sm {
+		grid-template-columns: repeat(2, 1fr);
+		display: grid;
+	}
+
+	@include screen-lg {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	@include screen-xl {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}

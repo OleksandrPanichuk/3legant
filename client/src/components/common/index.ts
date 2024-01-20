@@ -1,5 +1,6 @@
 export * from './CategorySelect'
 export * from './ConfirmModal'
+export * from './DefaultDropzone'
 export * from './Loading'
 export * from './Logo'
 export * from './PricePicker'

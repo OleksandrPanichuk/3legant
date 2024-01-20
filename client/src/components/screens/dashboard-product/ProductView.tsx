@@ -34,6 +34,7 @@ export const ProductView = async ({ productId }: IProductViewProps) => {
 	)
 }
 
+//TODO: loading component
 ProductView.Skeleton = function ProductViewSkeleton() {
 	return <>Loading....</>
 }

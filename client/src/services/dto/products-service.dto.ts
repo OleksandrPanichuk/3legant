@@ -150,3 +150,17 @@ export type UpdateProductImageStatusInput = z.infer<
 >
 
 export type DeleteProductImageInput = z.infer<typeof deleteProductImageSchema>
+
+
+
+export const createProductColorSchema = z.object({
+	file: z.custom<File>(v => v instanceof File, {
+		message: 'File is required',
+	}),
+	name: z.string().min(3, 'Color name is too short'),
+})
+
+
+export type CreateProductColorInput = z.infer<typeof createProductColorSchema> & {
+	productId:string
+}

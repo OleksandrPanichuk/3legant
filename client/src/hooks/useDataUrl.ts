@@ -2,9 +2,9 @@
 import { useCallback, useState } from "react"
 
 
-export type UseDataUrlResult = [string | undefined, (files:File) => void]
+// export type UseDataUrlResult = [string | undefined, (files:File) => void]
 
-export const useDataUrl = (): UseDataUrlResult => {
+export const useDataUrl = () => {
     const [dataUrl, setDataUrl] = useState<string>()
 
     
@@ -22,5 +22,7 @@ export const useDataUrl = (): UseDataUrlResult => {
         reader.readAsDataURL(file)
     },[])
 
-    return [dataUrl, getDataUrl]
+    const reset = useCallback(() => setDataUrl(undefined),[])
+
+    return [dataUrl, getDataUrl, reset] as const
 }

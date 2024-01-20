@@ -1,8 +1,7 @@
 'use client'
 
-import { Button, Typography } from '@/components/ui'
+import { Button } from '@/components/ui'
 import { useDataUrl, useModalChildren } from '@/hooks'
-import { cn } from '@/lib'
 import {
 	Checkbox,
 	Flex,
@@ -15,26 +14,26 @@ import {
 	ModalOverlay,
 	useDisclosure,
 } from '@chakra-ui/react'
-import Image from 'next/image'
 import { PropsWithChildren, useState } from 'react'
-import Dropzone from 'react-dropzone'
 
+import { DefaultDropzone } from '@/components/common'
+import { useSignal } from '@preact/signals-react'
 import { Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { useAddProductImage } from './NewProductImageModal.hooks'
 import styles from './NewProductImageModal.module.scss'
-import { useSignal } from '@preact/signals-react'
 
 export const NewProductImageModal = ({ children }: PropsWithChildren) => {
 	const { isOpen, onClose, onOpen } = useDisclosure()
 	const isPreview = useSignal<boolean>(false)
 	const [file, setFile] = useState<File>()
 
-	const [src, getDataUrl] = useDataUrl()
+	const [src, getDataUrl, resetSrc] = useDataUrl()
 
 	const close = () => {
 		onClose()
 		setFile(undefined)
+		resetSrc()
 		isPreview.value = false
 	}
 
@@ -60,38 +59,13 @@ export const NewProductImageModal = ({ children }: PropsWithChildren) => {
 					<ModalCloseButton />
 					<ModalHeader>Add a new product image</ModalHeader>
 					<ModalBody>
-						<Dropzone
-							onDrop={files => {
-								setFile(files[0])
-								getDataUrl(files[0])
-							}}
+						<DefaultDropzone
+							src={src}
+							getDataUrl={getDataUrl}
 							disabled={isPending}
-							multiple={false}
-							maxFiles={1}
-							accept={{
-								'image/*': ['.jpeg', '.png', '.jpg', '.wepb'],
-							}}
-						>
-							{({ getInputProps, getRootProps }) => (
-								<div
-									{...getRootProps()}
-									className={cn(
-										styles.dropzone,
-										!src && styles['dropzone--empty']
-									)}
-								>
-									<input {...getInputProps()} disabled={isPending} />
+							onDrop={setFile}
+						/>
 
-									{src ? (
-										<Image fill src={src} alt={'product-image'} />
-									) : (
-										<Typography className={styles.text}>
-											Include a high-quality image.
-										</Typography>
-									)}
-								</div>
-							)}
-						</Dropzone>
 						<Flex as='label' className={styles['is-preview']}>
 							<Checkbox
 								checked={isPreview.value}

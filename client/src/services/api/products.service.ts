@@ -1,5 +1,6 @@
 import { axios } from '@/lib'
 import {
+	createProductColorSchema,
 	createProductSchema,
 	deleteProductImageSchema,
 	findAllProductsSchema,
@@ -8,6 +9,7 @@ import {
 	updateProductSchema,
 	type AddProductImageInput,
 	type AddProductImageResponse,
+	type CreateProductColorInput,
 	type CreateProductInput,
 	type DeleteProductImageInput,
 	type FindAllProductsInput,
@@ -20,6 +22,7 @@ import {
 } from '@/services'
 import type {
 	TypeFullProduct,
+	TypeFullProductColor,
 	TypeProduct,
 	TypeProductImage,
 } from '@/shared/types'
@@ -131,5 +134,22 @@ export class ProductsService {
 		const url = `${ProductsServiceRoutes.PRODUCTS}/${dto.productId}/images/${dto.imageId}/status`
 
 		return await axios.patch<TypeProductImage>(url)
+	}
+
+	static async createColor(
+		dto: CreateProductColorInput
+	): Promise<AxiosResponse<TypeFullProductColor>> {
+		createProductColorSchema.parse(dto)
+
+		const formData = new FormData()
+
+		formData.append('image', dto.file)
+		formData.append('name', dto.name)
+
+		const url = `${ProductsServiceRoutes.PRODUCTS}/${dto.productId}/colors`
+
+		return await axios.post<TypeFullProductColor>(url, formData, {
+			headers: { 'Content-Type': 'multipart/form-data' },
+		})
 	}
 }

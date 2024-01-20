@@ -1,19 +1,20 @@
 'use client'
-import { InputHTMLAttributes, ReactNode, forwardRef, useState } from 'react'
-import { Radio } from '@/components/ui'
-import styles from './Input.module.scss'
 import { cn } from '@/lib'
-import { Eye as  EyeIcon, EyeOff as EyeOffIcon } from 'lucide-react'
+import { Signal } from '@preact/signals-react'
+import { Eye as EyeIcon, EyeOff as EyeOffIcon } from 'lucide-react'
+import { InputHTMLAttributes, ReactNode, forwardRef, useState } from 'react'
+import styles from './Input.module.scss'
 
-export interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface IInputProps
+	extends Omit<InputHTMLAttributes<HTMLInputElement>, 'value'> {
 	icon?: ReactNode
+	value?:
+		| InputHTMLAttributes<HTMLInputElement>['value']
+		| Signal<string | number>
 }
 
 export const Input = forwardRef<HTMLInputElement, IInputProps>(
 	({ className, icon, type, ...props }, ref) => {
-		if (type === 'radio') {
-			return <Radio className={className} {...props} />
-		}
 		if (type === 'password') {
 			return <PasswordInput icon={icon} className={className} {...props} />
 		}
@@ -22,10 +23,11 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
 		return (
 			<div className={cn(styles.wrapper, styles['wrapper-empty'], className)}>
 				{Icon}
+				{/* @ts-ignore */}
 				<input
 					ref={ref}
 					{...props}
-					onChange={(e) => {
+					onChange={e => {
 						props.onChange?.(e)
 						if (!e.target.value) {
 							e.target.parentElement?.classList.add(styles['wrapper-empty'])
@@ -52,10 +54,11 @@ export const PasswordInput = forwardRef<
 	return (
 		<div className={cn(styles.wrapper, styles['wrapper-empty'], className)}>
 			{Icon}
+			{/* @ts-ignore */}
 			<input
 				ref={ref}
 				{...props}
-				onChange={(e) => {
+				onChange={e => {
 					props.onChange?.(e)
 					if (!e.target.value) {
 						e.target.parentElement?.classList.add(styles['wrapper-empty'])
@@ -69,7 +72,7 @@ export const PasswordInput = forwardRef<
 			<button
 				type={'button'}
 				onClick={() => {
-					setIsVisible((prev) => !prev)
+					setIsVisible(prev => !prev)
 				}}
 				className={styles['password-hide-button']}
 			>
